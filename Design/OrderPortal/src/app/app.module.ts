@@ -9,6 +9,7 @@ import { HomeComponent } from './component/home/home.component';
 import { PopupComponent } from './component/popup/popup.component';
 import { MenubarComponent } from './component/menubar/menubar.component';
 import { TemplateInfoComponent } from './component/template-info/template-info.component';
+import { HeaderInfoComponent } from './component/header-info/header-info.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { TemplateInfoComponent } from './component/template-info/template-info.c
     HomeComponent,
     PopupComponent,
     MenubarComponent,
-    TemplateInfoComponent
+    TemplateInfoComponent,
+    HeaderInfoComponent
   ],
   imports: [
     BrowserModule,
