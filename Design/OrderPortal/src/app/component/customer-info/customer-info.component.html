@@ -1,1 +1,82 @@
-<p>customer-info works!</p>
+<div class="title-container">
+    <h1>Customer Information</h1>
+<div class="btn-pl"><img src="assets\change-dealer-icon.svg" class="bt-icon" alt="">Change Dealer</div>
+</div>
+<div class="cust-details">
+    <div class="detail">
+        <p>Account No</p>
+        <h3>98549</h3>
+    </div>
+    <div class="detail">
+        <p>Name</p>
+        <h3>John A. Thompson</h3>
+    </div>
+    <div class="detail">
+        <p>Discount Level</p>
+        <h3>BA (Base) (0%)</h3>
+    </div>
+    <div class="detail">
+        <p>Parts Level</p>
+        <h3>Bronze (0%)</h3>
+    </div>
+    <div class="detail">
+        <p>Promo Code</p>
+        <h3>PSOSPRING</h3>
+    </div>
+</div>
+
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 summary-table">
+
+  
+    <!-- shipment -->
+    <ng-container matColumnDef="shipment">
+      <th mat-header-cell *matHeaderCellDef> Shipment </th>
+      <td mat-cell *matCellDef="let element"> {{element.shipment}} </td>
+    </ng-container>
+  
+    <!-- s1date Column -->
+    <ng-container matColumnDef="s1date">
+      <th mat-header-cell *matHeaderCellDef> xxxx-xx-xx </th>
+      <td mat-cell *matCellDef="let element"> {{element.s1date}} </td>
+    </ng-container>
+  
+    <!-- s2date Column -->
+    <ng-container matColumnDef="s2date">
+      <th mat-header-cell *matHeaderCellDef> xxxx-xx-xx </th>
+      <td mat-cell *matCellDef="let element"> {{element.s2date}} </td>
+    </ng-container>
+  
+    <!-- s3date Column -->
+    <ng-container matColumnDef="s3date">
+      <th mat-header-cell *matHeaderCellDef> xxxx-xx-xx </th>
+      <td mat-cell *matCellDef="let element"> {{element.s3date}} </td>
+    </ng-container>
+
+    <!-- pnadate Column -->
+    <ng-container matColumnDef="pnadate">
+        <th mat-header-cell *matHeaderCellDef> xxxx-xx-xx </th>
+        <td mat-cell *matCellDef="let element"> {{element.pnadate}} </td>
+      </ng-container>
+
+    <!-- s1 Column -->
+    <ng-container matColumnDef="s1">
+        <th mat-header-cell *matHeaderCellDef> xxxx-xx-xx </th>
+        <td mat-cell *matCellDef="let element"> {{element.s1}} </td>
+      </ng-container>
+
+    <!-- s2 Column -->
+    <ng-container matColumnDef="s2">
+        <th mat-header-cell *matHeaderCellDef> xxxx-xx-xx </th>
+        <td mat-cell *matCellDef="let element"> {{element.s2}} </td>
+      </ng-container>
+    
+    <!-- s3 Column -->
+    <ng-container matColumnDef="s3">
+        <th mat-header-cell *matHeaderCellDef> xxxx-xx-xx </th>
+        <td mat-cell *matCellDef="let element"> {{element.s3}} </td>
+      </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>

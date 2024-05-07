@@ -10,6 +10,9 @@ import { PopupComponent } from './component/popup/popup.component';
 import { MenubarComponent } from './component/menubar/menubar.component';
 import { TemplateInfoComponent } from './component/template-info/template-info.component';
 import { HeaderInfoComponent } from './component/header-info/header-info.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,10 @@ import { HeaderInfoComponent } from './component/header-info/header-info.compone
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

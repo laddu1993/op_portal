@@ -1,0 +1,75 @@
+/* You can add global styles to this file, and also import other style files */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Heebo", sans-serif;
+    color: #273A60;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    color: #3D3D3C;
+    font-size: 14px;
+}
+
+.title-container
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.3rem 0;
+    border-bottom: 1px solid #D2D2D1;
+    h1
+    {
+    font-size: 22px;   
+    font-weight: 600;
+    margin:0;     
+    }
+}
+.btn-pl
+{
+    display: flex;
+    align-items: center;
+    column-gap: 7px;
+    color: #273A60;
+    font-family: "Heebo", sans-serif;
+}
+
+
+.cust-details
+{
+    display: flex;
+    padding: 1.3rem 0;
+    .detail
+    {
+        width: 100%;
+        p{
+            font-size: 12px;
+            color:#90908F;
+            margin-bottom: 10px;
+        }
+        h3
+        {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2C2C2B;
+            margin:0;
+        }
+    }
+}
+
+
+::ng-deep .summary-table {
+    tbody tr:last-child {
+        background-color: rgb(242 84 32 / 8%);
+        border: 1px solid rgb(242 84 32 / 60%);
+    }
+
+    tr td:first-child,
+    tr:first-child td {
+        font-weight: bold;
+    }
+}
