@@ -1,10 +1,52 @@
+/* You can add global styles to this file, and also import other style files */
+@import "assets/CSS/variables";
+@import "assets/CSS/buttons";
+@import "assets/CSS/modifiers";
+@import "assets/CSS/mixins";
 
+*{font-family: "Roboto", sans-serif;}
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: "Heebo", sans-serif;
+}
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-.mat-mdc-table {
-    box-shadow: none;
+body {
+    margin: 0;
+    color: $Grey-600;
+    font-size: 14px;
 }
-.mat-mdc-table thead
+
+.title-container
 {
-background-color: #F4F4F3 !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.3rem 0;
+    border-bottom: 1px solid $Grey-300;
+    h1
+    {
+    @include main-title-blue; 
+    }
 }
+.details-container
+{
+    display: flex;
+    padding: 1.3rem 0;
+    .detail
+    {
+        width: 100%;
+        p{
+            font-size: 12px;
+            color:#90908F;
+            margin-bottom: 10px;
+        }
+        h3
+        {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2C2C2B;
+            margin:0;
+        }
+    }
+}
+

@@ -1,0 +1,62 @@
+.btn {
+    display: flex;
+    align-items: center;
+    column-gap: 7px;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-family: "Heebo", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    text-transform: uppercase;
+
+    &__primary {
+        border: none;
+        color: $White !important;
+        background-color: $Hasqvarna-Blue;
+
+        &:hover {
+            background-color: $Hasqvarna-Blue-15;
+            box-shadow: 3px 3px 2px 0px rgba(0, 0, 0, 0.10);
+        }
+
+        &:disabled {
+            background-color: $Hasqvarna-Blue-30;
+        }
+    }
+
+    &__primary-reverse {
+        border: none;
+        color: $Hasqvarna-Blue;
+        background-color: $White;
+
+        &:hover {
+            background-color: $Grey-100;
+        }
+    }
+
+    &__secondary {
+        border: 1px solid $Grey-600;
+        color: $Grey-600;
+        background-color: transparent;
+
+        &:hover {
+            background-color: $Grey-100;
+            border: 1px solid $Grey-600;
+        }
+
+        &:disabled {
+            border: 1px solid $Grey-400;
+            color: $Grey-400;
+        }
+    }
+
+    &__pl-wicon {
+        border: none;
+        color: $Hasqvarna-Blue !important;
+        background-color: transparent;
+        text-transform: capitalize;
+        padding: 0;
+        font-weight: 500;
+    }
+
+}

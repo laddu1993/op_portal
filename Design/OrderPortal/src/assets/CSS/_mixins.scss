@@ -1,0 +1,28 @@
+@mixin main-title-blue
+{
+    font-size: 22px;
+    font-weight: 600;
+    color: $Hasqvarna-Blue;
+}
+
+@mixin title-grey
+{
+    font-size: 18px;
+    font-weight: 600;
+    color:$Grey-700;
+}
+
+@mixin body16
+{
+    font-size: 16px;
+    font-weight: 400;
+    color:$Grey-600;
+}
+
+@mixin body14
+{
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 400;
+    color:$Grey-600;
+}

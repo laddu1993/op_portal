@@ -1,8 +1,8 @@
 <div class="title-container">
     <h1>Customer Information</h1>
-<div class="btn-pl"><img src="assets\change-dealer-icon.svg" class="bt-icon" alt="">Change Dealer</div>
+<button type="button" class="btn btn__pl-wicon"><img src="assets\change-dealer-icon.svg" class="bt-icon" alt="">Change Dealer</button>
 </div>
-<div class="cust-details">
+<div class="details-container">
     <div class="detail">
         <p>Account No</p>
         <h3>98549</h3>
@@ -27,7 +27,7 @@
 
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 summary-table">
-
+  <button mat-flat-button color="primary">Primary</button>
   
     <!-- shipment -->
     <ng-container matColumnDef="shipment">
