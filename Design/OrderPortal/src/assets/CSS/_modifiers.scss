@@ -5,3 +5,34 @@
 {
 background-color: $Grey-100 !important;
 }
+
+.searchip 
+{
+    
+    input
+    {
+    border: 1px solid $Grey-400;
+    border-radius: 6px;
+    padding:8px 34px 8px 14px;
+    }
+    .mat-mdc-form-field
+    {
+        min-height: 40px;
+    }
+    .mat-mdc-form-field-infix
+    {
+        padding:0 !important;
+        display: flex;
+        align-items: center;
+        min-height:40px;
+        width: fit-content;
+        img
+        {
+            margin-left: -28px;
+        }
+    }
+    .mat-mdc-form-field-subscript-wrapper
+    {
+        display: none;
+    }
+}
