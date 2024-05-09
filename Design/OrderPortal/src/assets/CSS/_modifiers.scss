@@ -1,3 +1,6 @@
+@import './mixins';
+@import './variables.scss';
+
 .mat-mdc-table {
     box-shadow: none;
 }
@@ -6,19 +9,23 @@
 background-color: $Grey-100 !important;
 }
 
+// mat-paginator
 .searchip 
 {
     
-    input
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field
     {
-    border: 1px solid $Grey-400;
-    border-radius: 6px;
-    padding:8px 34px 8px 14px;
-    }
-    .mat-mdc-form-field
+    &__input
     {
-        min-height: 40px;
+    color: $Grey-600;
     }
+
+    }
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing
+{
+    border-color: $Grey-400;
+}
+
     .mat-mdc-form-field-infix
     {
         padding:0 !important;
@@ -26,13 +33,120 @@ background-color: $Grey-100 !important;
         align-items: center;
         min-height:40px;
         width: fit-content;
-        img
-        {
-            margin-left: -28px;
-        }
     }
     .mat-mdc-form-field-subscript-wrapper
     {
         display: none;
     }
 }
+
+// mat-paginator
+.mat-mdc-paginator-container
+{
+    background-color: $Grey-100;
+    justify-content: space-between !important;
+}
+
+
+
+    // mat-button-toggle
+    .mat-button-toggle-appearance-standard.mat-button-toggle-checked
+    {
+        background-color: $Hasqvarna-Blue-10 !important;        
+    }
+    .mat-button-toggle-appearance-standard
+    {
+        color: $Grey-400 !important;   
+        border-radius: 4px;          
+    }
+    .mat-button-toggle-standalone, .mat-button-toggle-group
+    {
+        column-gap: 4px;
+    }
+    .mat-button-toggle-appearance-standard .mat-button-toggle-label-content
+    {
+        
+        line-height: 14px !important;
+        padding: 12px 24px !important;
+    }
+    .mat-button-toggle-group
+    {
+        padding: 4px;
+        border-radius: 6px !important;   
+    }
+    .mat-button-toggle-checked 
+    {
+        color: $Hasqvarna-Blue !important;
+    }
+
+    .mat-button-toggle-group-appearance-standard .mat-button-toggle-appearance-standard+.mat-button-toggle-appearance-standard {
+        border: none !important;
+    }
+    
+    
+    // mat-expansion-panel
+    .mat-expansion-panel:not([class*=mat-elevation-z])
+    {
+        box-shadow: none !important;
+    }
+    .mat-expansion-panel-header
+    {
+        height: fit-content !important;
+    }
+    .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]):hover {
+        background: transparent !important; 
+    }
+    .mat-expansion-panel-spacing {
+        margin: 0 !important;
+    }
+
+
+    .Exp-panel-big
+    {
+    .mat-expansion-panel:not([class*=mat-elevation-z])
+    {
+        @include grey-border-bottom;
+    }
+    .mat-expansion-panel-header
+    {
+        padding: 1.3rem 0 !important;
+    }
+    .mat-expansion-panel-header-title
+    {
+        @include main-title-blue; 
+        font-family: "Heebo", sans-serif;
+        color: $Hasqvarna-Blue !important;       
+    }
+    .mat-expansion-panel-body {
+        padding: 0 0 16px !important;
+    }
+    }
+
+    .Exp-panel-sm
+    {
+        .mat-expansion-panel-header
+        {
+            padding: 12px 0 !important;
+        }
+        .mat-expansion-panel-header-title
+        {
+            @include body16; 
+            color: $Grey-600 !important;       
+        }
+        .mat-expansion-panel-body 
+        {
+            @include grey-border-top;
+            padding: 20px 0 !important;
+        }
+        .mat-expanded
+        {
+            .mat-expansion-panel-header-title
+        {
+            font-weight: 500;       
+        }
+        }
+    }
+
+ 
+    
+    

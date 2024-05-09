@@ -80,6 +80,13 @@ body {
         }
     }
 
+    &__title-wo-border {        
+        justify-content: space-between;
+        h1 {
+            @include main-title-blue;
+        }
+    }
+
     &__title-small-wo-border
     {
         h3
@@ -91,9 +98,14 @@ body {
     .left-block, .right-block
     {
         display: flex;
-        column-gap: 20px;
+        column-gap: 10px;
         align-items: center;
     }
 
+}
+
+.spacer-12
+{
+    margin-bottom:12px;
 }
 
