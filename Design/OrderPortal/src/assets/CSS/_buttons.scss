@@ -8,11 +8,12 @@
     font-weight: 500;
     font-size: 14px;
     text-transform: uppercase;
+    border: 1px solid;
 
     &__primary {
-        border: none;
         color: $White !important;
         background-color: $Hasqvarna-Blue;
+        border-color: $Hasqvarna-Blue;
 
         &:hover {
             background-color: $Hasqvarna-Blue-15;
@@ -28,24 +29,27 @@
         border: none;
         color: $Hasqvarna-Blue;
         background-color: $White;
+        border-color: $White;
 
         &:hover {
             background-color: $Grey-100;
+            border-color: $Grey-100;
+            
         }
     }
 
     &__secondary {
-        border: 1px solid $Grey-600;
+        border-color:$Grey-600;
         color: $Grey-600;
         background-color: transparent;
 
         &:hover {
             background-color: $Grey-100;
-            border: 1px solid $Grey-600;
+            border-color: $Grey-600;
         }
 
         &:disabled {
-            border: 1px solid $Grey-400;
+            border-color: $Grey-400;
             color: $Grey-400;
         }
     }

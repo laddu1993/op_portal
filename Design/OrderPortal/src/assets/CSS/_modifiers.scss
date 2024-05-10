@@ -67,11 +67,11 @@ background-color: $Grey-100 !important;
     {
         
         line-height: 14px !important;
-        padding: 12px 24px !important;
+        padding: 10px 16px !important;
     }
     .mat-button-toggle-group
     {
-        padding: 4px;
+        padding: 3px;
         border-radius: 6px !important;   
     }
     .mat-button-toggle-checked 
@@ -149,4 +149,52 @@ background-color: $Grey-100 !important;
 
  
     
+    // mat-checkbox
+    .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background, .mdc-checkbox .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background, .mdc-checkbox .mdc-checkbox__native-control[data-indeterminate=true]:enabled~.mdc-checkbox__background
+    {
+        border-color: $Hasqvarna-Blue !important;
+        background-color: $Hasqvarna-Blue !important;
+        border-radius: 5px;
+    }
+    .mdc-checkbox:hover .mdc-checkbox__native-control:checked~.mdc-checkbox__ripple, .mdc-checkbox:active .mdc-checkbox__native-control:checked~.mdc-checkbox__ripple, .mdc-checkbox .mdc-checkbox__native-control:focus:checked~.mdc-checkbox__ripple
+    {
+        opacity: 1 !important;
+        background-color: $Hasqvarna-Blue-10 !important;
+    }
+    .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true])~.mdc-checkbox__background
+    {
+        border-radius: 5px;
+        border: 1px solid $Grey-400 !important;
+    }
+
+
+
+     // mat-tabs
+    .mat-tab-group {
+        margin-bottom: 48px;
+      }
+      .mat-mdc-tab-label-container
+      {
+        border-bottom: 1px solid $Grey-300;
+      }
+      .mat-mdc-tab-header {
+        --mdc-secondary-navigation-tab-container-height: 74px !important;
+    }
+    .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label
+    {
+    color: $Hasqvarna-Blue !important;
+    }
+    .mat-mdc-tab .mdc-tab-indicator__content--underline
+    {
+        border-color: $Hasqvarna-Blue !important;   
+    }
+    .mat-mdc-tab .mdc-tab__text-label {
+        font-size: 16px;
+        font-weight: 500;
+        color:$Grey-400 !important;
+    }
+    .mat-mdc-tab.mdc-tab .mdc-tab__ripple
+    {
+display: none;
+    }
     
