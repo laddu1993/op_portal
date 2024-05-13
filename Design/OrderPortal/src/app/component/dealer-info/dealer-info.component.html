@@ -128,6 +128,27 @@
               <input matInput placeholder="Search">
               <img src="../../../assets/search-icon.svg" alt="">
             </mat-form-field>
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="more-options">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>
+                <img src="../../../assets/download-pdf-icon.svg" alt="">
+                <span>Download Pdf</span>
+              </button>
+              <button mat-menu-item>
+                <img src="../../../assets/add-to-templates-icon.svg" alt="">
+                <span>Add to Templates</span>
+              </button>
+              <button mat-menu-item>
+                <img src="../../../assets/save-template-icon.svg" alt="">
+                <span>Save Template</span>
+              </button>
+              <button mat-menu-item>
+                <img src="../../../assets/load-template-icon.svg" alt="">
+                <span>Load Template</span>
+              </button>
+            </mat-menu>
         </div>
     </div>
 

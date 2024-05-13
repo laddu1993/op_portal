@@ -108,14 +108,12 @@ body {
             @include body16;
         }
     }
-
-    .left-block, .right-block
-    {
-        display: flex;
-        column-gap: 20px;
-        align-items: center;
-    }
-
+}
+.left-block, .right-block
+{
+    display: flex;
+    column-gap: 20px;
+    align-items: center;
 }
 .btn-grp
 {
@@ -128,5 +126,10 @@ body {
 .spacer-12
 {
     margin-bottom:12px;
+}
+
+.header-outer
+{
+    padding: 24px;
 }
 

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CustomerInfoComponent } from './component/customer-info/customer-info.component';
@@ -21,6 +22,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatSidenavModule} from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,10 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatInputModule,
     MatFormFieldModule,
     MatCheckboxModule,
-    MatTabsModule
+    MatTabsModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]
