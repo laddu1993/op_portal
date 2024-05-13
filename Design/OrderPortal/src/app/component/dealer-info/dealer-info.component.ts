@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import {MatTableModule} from '@angular/material/table';
-
-
+import { MatDialog } from '@angular/material/dialog';
+import { TemplatePopupComponent } from '../popup/template-popup/template-popup.component';
+import { AddTemplatePopupComponent } from '../popup/add-template-popup/add-template-popup.component';
 
 export interface PeriodicElement {
   sku: string;
@@ -64,6 +65,17 @@ const SUMMARY_DATA: SummaryTable[] = [
 export class DealerInfoComponent  {
   displayedColumns: string[] = ['sku', 'model', 'description', 'history', 's1', 's2', 's3', 'pna', 'd1', 'd2', 'd3', 'msrp', 'cost', 'ayp', 'ext'];
   dataSource = ELEMENT_DATA;
+
+  constructor(private dialog: MatDialog) {}
+
+  openTemplatePopup(): void {
+    this.dialog.open(TemplatePopupComponent);
+  }
+
+  openAddTemplatePopup(): void{
+    this.dialog.open(AddTemplatePopupComponent);
+  }
+
 }
 
 export class SummaryTablecl  {

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import {MatTableModule} from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
+import { DealerPopupComponent } from '../popup/dealer-popup/dealer-popup.component';
 
 export interface PeriodicElement {
   shipment: string;
@@ -29,8 +31,15 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 
 export class CustomerInfoComponent {
+
   displayedColumns: string[] = ['shipment', 's1date', 's2date', 's3date', 'pnadate', 's1', 's2', 's3'];
   dataSource = ELEMENT_DATA;
+
+  constructor(private dialog: MatDialog) {}
+
+  openPopup(): void {
+    this.dialog.open(DealerPopupComponent);
+  }
 
 }
 

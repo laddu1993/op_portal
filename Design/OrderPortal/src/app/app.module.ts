@@ -23,6 +23,13 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DealerPopupComponent } from './component/popup/dealer-popup/dealer-popup.component';
+import { TemplatePopupComponent } from './component/popup/template-popup/template-popup.component';
+import { DeleteTemplatePopupComponent } from './component/popup/delete-template-popup/delete-template-popup.component';
+import { AddTemplatePopupComponent } from './component/popup/add-template-popup/add-template-popup.component';
+import { ClearOrderPopupComponent } from './component/popup/clear-order-popup/clear-order-popup.component';
+
 
 @NgModule({
   declarations: [
@@ -33,7 +40,12 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     PopupComponent,
     MenubarComponent,
     TemplateInfoComponent,
-    HeaderInfoComponent
+    HeaderInfoComponent,
+    DealerPopupComponent,
+    TemplatePopupComponent,
+    DeleteTemplatePopupComponent,
+    AddTemplatePopupComponent,
+    ClearOrderPopupComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +63,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     MatTabsModule,
     MatSidenavModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
