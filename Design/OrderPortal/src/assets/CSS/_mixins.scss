@@ -1,6 +1,6 @@
 @mixin main-title-blue
 {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     color: $Hasqvarna-Blue;
     margin:0;
@@ -8,9 +8,16 @@
 
 @mixin title-grey
 {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     color:$Grey-700;
+    margin:0;
+}
+@mixin main-title-blue16
+{
+    font-size: 16px;
+    font-weight: 600;
+    color: $Hasqvarna-Blue;
     margin:0;
 }
 
@@ -29,6 +36,7 @@
     font-weight: 400;
     color:$Grey-600;
 }
+
 @mixin body12
 {
     font-size: 12px;

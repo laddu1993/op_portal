@@ -9,3 +9,9 @@
 {
     padding-top:0;
 }
+
+
+
+::ng-deep .mat-mdc-tab-body {
+    min-height: calc(100vh - 222px);
+}

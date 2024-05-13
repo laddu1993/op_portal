@@ -124,6 +124,7 @@ background-color: $Grey-100 !important;
     .mat-expansion-panel:not([class*=mat-elevation-z])
     {
         @include grey-border-bottom;
+        border-radius:0;
     }
     .mat-expansion-panel-header
     {
