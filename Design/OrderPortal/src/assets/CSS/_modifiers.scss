@@ -1,0 +1,259 @@
+@import './mixins';
+@import './variables.scss';
+
+.mat-mdc-table {
+    box-shadow: none;
+}
+.mat-mdc-table thead
+{
+background-color: $Grey-100 !important;
+}
+
+// mat-paginator
+.searchip 
+{
+    
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field
+    {
+    &__input
+    {
+    color: $Grey-600;
+    }
+
+    }
+    .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing
+{
+    border-color: $Grey-400;
+}
+
+    .mat-mdc-form-field-infix
+    {
+        padding:0 !important;
+        display: flex;
+        align-items: center;
+        min-height:40px;
+        width: fit-content;
+    }
+    .mat-mdc-form-field-subscript-wrapper
+    {
+        display: none;
+    }
+}
+
+// mat-paginator
+.mat-mdc-paginator-container
+{
+    background-color: $Grey-100;
+    justify-content: space-between !important;
+}
+
+
+
+    // mat-button-toggle
+    .mat-button-toggle-appearance-standard.mat-button-toggle-checked
+    {
+        background-color: $Hasqvarna-Blue-10 !important;        
+    }
+    .mat-button-toggle-appearance-standard
+    {
+        color: $Grey-400 !important;   
+        border-radius: 4px;          
+    }
+    .mat-button-toggle-standalone, .mat-button-toggle-group
+    {
+        column-gap: 4px;
+    }
+    .mat-button-toggle-appearance-standard .mat-button-toggle-label-content
+    {
+        
+        line-height: 14px !important;
+        padding: 10px 16px !important;
+    }
+    .mat-button-toggle-group
+    {
+        padding: 3px;
+        border-radius: 6px !important;   
+    }
+    .mat-button-toggle-checked 
+    {
+        color: $Hasqvarna-Blue !important;
+    }
+
+    .mat-button-toggle-group-appearance-standard .mat-button-toggle-appearance-standard+.mat-button-toggle-appearance-standard {
+        border: none !important;
+    }
+    
+    
+    // mat-expansion-panel
+    .mat-expansion-panel:not([class*=mat-elevation-z])
+    {
+        box-shadow: none !important;
+    }
+    .mat-expansion-panel-header
+    {
+        height: fit-content !important;
+    }
+    .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]):hover {
+        background: transparent !important; 
+    }
+    .mat-expansion-panel-spacing {
+        margin: 0 !important;
+    }
+    .mat-expansion-indicator::after
+    {
+        content: url(../plus-icon.svg) !important;
+        border: none !important;
+        padding: 0 !important;
+        transform: rotate(0deg) !important;
+        display: flex !important;
+        align-items: center;
+    }
+    .mat-expanded .mat-expansion-indicator::after
+    {
+        content: url(../minus-icon.svg) !important;
+        transform: rotate(0deg) !important;
+    }
+    .mat-expansion-indicator
+    {
+        transform: rotate(0deg) !important;  
+    }
+
+
+    .Exp-panel-big
+    {
+    .mat-expansion-panel:not([class*=mat-elevation-z])
+    {
+        @include grey-border-bottom;
+    }
+    .mat-expansion-panel-header
+    {
+        padding: 1.3rem 0 !important;
+    }
+    .mat-expansion-panel-header-title
+    {
+        @include main-title-blue; 
+        font-family: "Heebo", sans-serif;
+        color: $Hasqvarna-Blue !important;       
+    }
+    .mat-expansion-panel-body {
+        padding: 0 0 16px !important;
+    }
+    }
+
+    .Exp-panel-sm
+    {
+        .mat-expansion-panel-header
+        {
+            padding: 12px 0 !important;
+        }
+        .mat-expansion-panel-header-title
+        {
+            @include body16; 
+            color: $Grey-600 !important;       
+        }
+        .mat-expansion-panel-body 
+        {
+            @include grey-border-top;
+            padding: 20px 0 !important;
+        }
+        .mat-expanded
+        {
+            .mat-expansion-panel-header-title
+        {
+            font-weight: 500;       
+        }
+        }
+    }
+
+ 
+    
+    // mat-checkbox
+    .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background, .mdc-checkbox .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background, .mdc-checkbox .mdc-checkbox__native-control[data-indeterminate=true]:enabled~.mdc-checkbox__background
+    {
+        border-color: $Hasqvarna-Blue !important;
+        background-color: $Hasqvarna-Blue !important;
+        border-radius: 5px;
+    }
+    .mdc-checkbox:hover .mdc-checkbox__native-control:checked~.mdc-checkbox__ripple, .mdc-checkbox:active .mdc-checkbox__native-control:checked~.mdc-checkbox__ripple, .mdc-checkbox .mdc-checkbox__native-control:focus:checked~.mdc-checkbox__ripple
+    {
+        opacity: 1 !important;
+        background-color: $Hasqvarna-Blue-10 !important;
+    }
+    .mdc-checkbox .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate=true])~.mdc-checkbox__background
+    {
+        border-radius: 5px;
+        border: 1px solid $Grey-400 !important;
+    }
+
+
+
+     // mat-tabs
+    .mat-tab-group {
+        margin-bottom: 48px;
+      }
+      .mat-mdc-tab-label-container
+      {
+        border-bottom: 1px solid $Grey-300;
+      }
+      .mat-mdc-tab-header {
+        --mdc-secondary-navigation-tab-container-height: 74px !important;
+    }
+    .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label
+    {
+    color: $Hasqvarna-Blue !important;
+    }
+    .mat-mdc-tab .mdc-tab-indicator__content--underline
+    {
+        border-color: $Hasqvarna-Blue !important;   
+    }
+    .mat-mdc-tab .mdc-tab__text-label {
+        font-size: 16px;
+        font-weight: 500;
+        color:$Grey-400 !important;
+    }
+    .mat-mdc-tab.mdc-tab .mdc-tab__ripple
+    {
+display: none;
+    }
+    .mat-mdc-tab-body-content
+    {
+        overflow: hidden !important;
+    }
+    
+
+    //mat menu
+    .mat-mdc-menu-content
+    {
+        padding: 0 !important;
+    }
+    .mat-mdc-menu-panel
+    {
+        border-radius: 6px !important;
+    }
+    .mat-mdc-menu-panel
+    {
+        box-shadow: 0px 4px 15.1px 0px rgba(0, 0, 0, 0.15) !important;
+    }
+    .mat-mdc-menu-item-text img
+{
+margin-right: 8px;
+}
+    .mat-mdc-icon-button.mat-mdc-button-base
+    {
+        width: 38px;
+        height: 38px;
+        padding: 5px;
+    }
+    .mat-mdc-menu-item:not([disabled]):hover
+    {
+        background-color: $Hasqvarna-Blue-10 !important;
+    }
+    .mat-mdc-menu-item
+    {
+        border-bottom:1px solid $Grey-300 !important;
+        &:last-child
+        {
+            border: 0 !important;
+        }
+
+    }

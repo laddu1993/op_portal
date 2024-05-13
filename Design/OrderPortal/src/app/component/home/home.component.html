@@ -1,1 +1,32 @@
-<p>home works!</p>
+
+
+<!-- header -->
+<div class="header-outer">
+    <div class="left-block">
+    <div class="hmenu-wrapper"> 
+        <img src="assets/menu-icon.svg" alt="">       
+    </div>
+<div class="logo-wrapper">
+    <img src="assets/logo.svg" alt="">
+</div>
+</div>
+</div>
+<!-- end of header -->
+
+
+<div class="pg-outer-container">
+<div class="content-container">
+<div class="btn-grp absolute-right">
+    <button type="button" class="btn btn__secondary" (click)="openClear()">Clear</button>
+    <button type="button" class="btn btn__primary">Submit</button>
+</div>
+<mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
+    <mat-tab label="Customer Info">
+<app-customer-info></app-customer-info>
+    </mat-tab>
+    <mat-tab label="Order Details">
+<app-dealer-info></app-dealer-info>
+    </mat-tab>
+</mat-tab-group>
+</div>
+</div>

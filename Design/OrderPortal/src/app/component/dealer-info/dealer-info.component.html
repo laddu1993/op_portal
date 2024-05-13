@@ -1,1 +1,267 @@
-<p>dealer-info works!</p>
+
+<div class="row gx-5">
+<div class="col-2">
+  <div class="inner-container inner-container__title-wo-border">
+    <h1>Products</h1>
+  </div>
+  <div class="Exp-panel-sm product-acc-outer">
+    <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Chainsaw
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-form-field appearance="outline" class="searchip">
+        <input matInput placeholder="Search">
+        <img src="../../../assets/search-icon.svg" alt="">
+      </mat-form-field>
+      <div class="spacer-12"></div>
+      <div class="Product-list">
+        <mat-checkbox>Product1</mat-checkbox>
+        <mat-checkbox>Product2</mat-checkbox>
+        <mat-checkbox>Product3</mat-checkbox>
+        <mat-checkbox>Product4</mat-checkbox>
+        <mat-checkbox>Product5</mat-checkbox>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Battery
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-form-field appearance="outline" class="searchip">
+        <input matInput placeholder="Search">
+        <img src="../../../assets/search-icon.svg" alt="">
+      </mat-form-field>
+      <div class="spacer-12"></div>
+      <div class="Product-list">
+        <mat-checkbox>Product1</mat-checkbox>
+        <mat-checkbox>Product2</mat-checkbox>
+        <mat-checkbox>Product3</mat-checkbox>
+        <mat-checkbox>Product4</mat-checkbox>
+        <mat-checkbox>Product5</mat-checkbox>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Handheld
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-form-field appearance="outline" class="searchip">
+        <input matInput placeholder="Search">
+        <img src="../../../assets/search-icon.svg" alt="">
+      </mat-form-field>
+      <div class="spacer-12"></div>
+      <div class="Product-list">
+        <mat-checkbox>Product1</mat-checkbox>
+        <mat-checkbox>Product2</mat-checkbox>
+        <mat-checkbox>Product3</mat-checkbox>
+        <mat-checkbox>Product4</mat-checkbox>
+        <mat-checkbox>Product5</mat-checkbox>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Resi ZTR
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-form-field appearance="outline" class="searchip">
+        <input matInput placeholder="Search">
+        <img src="../../../assets/search-icon.svg" alt="">
+      </mat-form-field>
+      <div class="spacer-12"></div>
+      <div class="Product-list">
+        <mat-checkbox>Product1</mat-checkbox>
+        <mat-checkbox>Product2</mat-checkbox>
+        <mat-checkbox>Product3</mat-checkbox>
+        <mat-checkbox>Product4</mat-checkbox>
+        <mat-checkbox>Product5</mat-checkbox>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Tractor
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-form-field appearance="outline" class="searchip">
+        <input matInput placeholder="Search">
+        <img src="../../../assets/search-icon.svg" alt="">
+      </mat-form-field>
+      <div class="spacer-12"></div>
+      <div class="Product-list">
+        <mat-checkbox>Product1</mat-checkbox>
+        <mat-checkbox>Product2</mat-checkbox>
+        <mat-checkbox>Product3</mat-checkbox>
+        <mat-checkbox>Product4</mat-checkbox>
+        <mat-checkbox>Product5</mat-checkbox>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+</div>
+<div class="col-10">
+  <div class="Exp-panel-big">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Order Summary
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+<p>summary table goes here</p>
+    </mat-expansion-panel>
+</div>
+    <div class="inner-container inner-container__title-wo-border">
+        <div class="left-block">
+        <h1>Order Details</h1>
+        <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+          <mat-button-toggle value="productlist" checked>Product List</mat-button-toggle>
+          <mat-button-toggle value="yourorder">Your Order</mat-button-toggle>
+        </mat-button-toggle-group>         
+        </div>
+        <div class="right-block">
+            <mat-form-field appearance="outline" class="searchip">
+              <input matInput placeholder="Search">
+              <img src="../../../assets/search-icon.svg" alt="">
+            </mat-form-field>
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="more-options">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>
+                <img src="../../../assets/download-pdf-icon.svg" alt="">
+                <span>Download Pdf</span>
+              </button>
+              <button mat-menu-item (click)="openAddTemplatePopup()">
+                <img src="../../../assets/add-to-templates-icon.svg" alt="">
+                <span>Add to Templates</span>
+              </button>
+              <button mat-menu-item>
+                <img src="../../../assets/save-template-icon.svg" alt="">
+                <span>Save Template</span>
+              </button>
+              <button mat-menu-item (click)="openTemplatePopup()">
+                <img src="../../../assets/load-template-icon.svg" alt="">
+                <span>Load Template</span>
+              </button>
+            </mat-menu>
+        </div>
+    </div>
+
+
+
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <button mat-flat-button color="primary">Primary</button>
+        
+          <!-- sku -->
+          <ng-container matColumnDef="sku">
+            <th mat-header-cell *matHeaderCellDef> SKU </th>
+            <td mat-cell *matCellDef="let element"> {{element.sku}} </td>
+          </ng-container>
+        
+          <!-- model Column -->
+          <ng-container matColumnDef="model">
+            <th mat-header-cell *matHeaderCellDef> Model </th>
+            <td mat-cell *matCellDef="let element"> {{element.model}} </td>
+          </ng-container>
+        
+          <!-- description Column -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+          </ng-container>
+        
+          <!-- history Column -->
+          <ng-container matColumnDef="history">
+            <th mat-header-cell *matHeaderCellDef> History </th>
+            <td mat-cell *matCellDef="let element"> {{element.history}} </td>
+          </ng-container>
+      
+          <!-- s1 Column -->
+          <ng-container matColumnDef="s1">
+              <th mat-header-cell *matHeaderCellDef> S1 </th>
+              <td mat-cell *matCellDef="let element"> {{element.s1}} </td>
+            </ng-container>
+      
+          <!-- s2 Column -->
+          <ng-container matColumnDef="s2">
+              <th mat-header-cell *matHeaderCellDef> S2 </th>
+              <td mat-cell *matCellDef="let element"> {{element.s2}} </td>
+            </ng-container>
+          
+          <!-- s3 Column -->
+          <ng-container matColumnDef="s3">
+              <th mat-header-cell *matHeaderCellDef> S3 </th>
+              <td mat-cell *matCellDef="let element"> {{element.s3}} </td>
+            </ng-container>
+            
+          <!-- pna Column -->
+          <ng-container matColumnDef="pna">
+            <th mat-header-cell *matHeaderCellDef> P&A </th>
+            <td mat-cell *matCellDef="let element"> {{element.pna}} </td>
+          </ng-container>   
+          
+          <!-- d1 Column -->
+          <ng-container matColumnDef="d1">
+            <th mat-header-cell *matHeaderCellDef> D1 </th>
+            <td mat-cell *matCellDef="let element"> {{element.d1}} </td>
+          </ng-container>
+
+          <!-- d2 Column -->
+          <ng-container matColumnDef="d2">
+            <th mat-header-cell *matHeaderCellDef> D2 </th>
+            <td mat-cell *matCellDef="let element"> {{element.d2}} </td>
+          </ng-container>
+
+          <!-- d3 Column -->
+          <ng-container matColumnDef="d3">
+            <th mat-header-cell *matHeaderCellDef> D3 </th>
+            <td mat-cell *matCellDef="let element"> {{element.d3}} </td>
+          </ng-container>
+
+          <!-- msrp Column -->
+          <ng-container matColumnDef="msrp">
+            <th mat-header-cell *matHeaderCellDef> MSRP </th>
+            <td mat-cell *matCellDef="let element"> {{element.msrp}} </td>
+          </ng-container>          
+
+          <!-- cost Column -->
+          <ng-container matColumnDef="cost">
+            <th mat-header-cell *matHeaderCellDef> Cost </th>
+            <td mat-cell *matCellDef="let element"> {{element.cost}} </td>
+          </ng-container>  
+          
+          <!-- ayp Column -->
+          <ng-container matColumnDef="ayp">
+            <th mat-header-cell *matHeaderCellDef> AYP </th>
+            <td mat-cell *matCellDef="let element"> {{element.ayp}} </td>
+          </ng-container>
+          
+          <!-- ext Column -->
+          <ng-container matColumnDef="ext">
+            <th mat-header-cell *matHeaderCellDef> Ext </th>
+            <td mat-cell *matCellDef="let element"> {{element.ext}} </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [length]="100"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]"
+              aria-label="Select page">
+</mat-paginator>
+
+
+</div>
+</div>
+
+
+
+
+
+

@@ -1,0 +1,54 @@
+@mixin main-title-blue
+{
+    font-size: 20px;
+    font-weight: 600;
+    color: $Hasqvarna-Blue;
+    margin:0;
+}
+
+@mixin title-grey
+{
+    font-size: 18px;
+    font-weight: 600;
+    color:$Grey-700;
+    margin:0;
+}
+
+@mixin body16
+{
+    font-size: 16px;
+    font-weight: 400;
+    color:$Grey-600;
+    margin:0;
+}
+
+@mixin body14
+{
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 400;
+    color:$Grey-600;
+}
+@mixin body12
+{
+    font-size: 12px;
+    line-height: 21px;
+    font-weight: 400;
+    color:$Grey-400;
+}
+
+@mixin inner-container
+{
+    display: flex;
+    align-items: center;
+    padding: 1.3rem 0;
+}
+
+@mixin grey-border-bottom
+{
+    border-bottom: 1px solid $Grey-300;
+}
+@mixin grey-border-top
+{
+    border-top: 1px solid $Grey-300;
+}
