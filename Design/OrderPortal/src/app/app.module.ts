@@ -29,6 +29,13 @@ import { TemplatePopupComponent } from './component/popup/template-popup/templat
 import { DeleteTemplatePopupComponent } from './component/popup/delete-template-popup/delete-template-popup.component';
 import { AddTemplatePopupComponent } from './component/popup/add-template-popup/add-template-popup.component';
 import { ClearOrderPopupComponent } from './component/popup/clear-order-popup/clear-order-popup.component';
+import { PartsComponent } from './component/partsportal/parts/parts.component';
+import { LegendsComponent } from './component/partsportal/popup/legends/legends.component';
+import { AdditemComponent } from './component/partsportal/popup/additem/additem.component';
+import { RemoveitemComponent } from './component/partsportal/popup/removeitem/removeitem.component';
+import { ClearconfirmationComponent } from './component/partsportal/popup/clearconfirmation/clearconfirmation.component';
+import { SuggestComponent } from './component/partsportal/popup/suggest/suggest.component';
+
 
 
 @NgModule({
@@ -45,7 +52,13 @@ import { ClearOrderPopupComponent } from './component/popup/clear-order-popup/cl
     TemplatePopupComponent,
     DeleteTemplatePopupComponent,
     AddTemplatePopupComponent,
-    ClearOrderPopupComponent
+    ClearOrderPopupComponent,
+    PartsComponent,
+    LegendsComponent,
+    AdditemComponent,
+    RemoveitemComponent,
+    ClearconfirmationComponent,
+    SuggestComponent
   ],
   imports: [
     BrowserModule,
