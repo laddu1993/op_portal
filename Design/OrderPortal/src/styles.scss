@@ -152,3 +152,43 @@ body {
         margin-bottom: 24px;
     }
 }
+
+.hint
+{
+    padding:16px;
+    border-radius:6px;
+    column-gap: 6px;
+    color: $Hasqvarna-Blue;
+    background-color: $Husqvarna-Orange-8;
+    border:1px solid $Husqvarna-Orange-60;
+    h3{
+        @include title-orange-sm;
+        display: inline-block;
+    }
+}
+.form-field-wrap
+{
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.popup-content {
+    h4 {
+        @include title-grey;
+    }
+
+    p {
+        @include body14;
+        margin:0;
+    }
+
+    &__large {
+        width: 70vw;
+    }
+
+    &__small {
+        max-width: 480px;
+    }
+}
+        

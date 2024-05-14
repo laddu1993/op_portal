@@ -13,6 +13,13 @@
     color:$Grey-700;
     margin:0;
 }
+@mixin title-orange-sm
+{
+    font-size: 14px;
+    font-weight: 600;
+    color:$Hasqvarna-Orange;
+    margin:0;
+}
 @mixin main-title-blue16
 {
     font-size: 16px;

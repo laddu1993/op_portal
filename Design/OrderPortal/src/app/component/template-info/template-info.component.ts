@@ -13,7 +13,7 @@ export interface Templates {
 }
 
 const TEMP_DATA: Templates[] = [
-  {name:'Template Name', created: 'xxxx-xx-xx', updated: 'xxxx-xx-xx', s1: '-', s2: '-', s3:'-', pna:'PSOSPRING', code:'x'}
+  {name:'Template Name', created: 'xxxx-xx-xx', updated: 'xxxx-xx-xx', s1: '-', s2: '-', s3:'-', pna:'-', code:'PSOSPRING'}
 ];
 
 @Component({

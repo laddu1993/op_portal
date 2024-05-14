@@ -1,1 +1,76 @@
-<p>template-popup works!</p>
+<!-- LOAD TEMPLATE POPUP -->
+
+<div class="inner-container inner-container__title-wo-border">
+    <div class="left-block">
+        <h1>Saved Order Templates</h1>
+    </div>
+    <div class="right-block">
+        <mat-form-field appearance="outline" class="searchip">
+            <input matInput placeholder="Search">
+            <img src="../../../assets/search-icon.svg" alt="">
+        </mat-form-field>
+        <img src="../../../assets/close-icon.svg" alt="">
+    </div>
+</div>
+
+<div class="popup-content popup-content__large">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 TemplateTable">
+    <button mat-flat-button color="primary">Primary</button>
+    
+      <!-- Name -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+    
+      <!-- Created -->
+      <ng-container matColumnDef="created">
+        <th mat-header-cell *matHeaderCellDef> Created </th>
+        <td mat-cell *matCellDef="let element"> {{element.created}} </td>
+      </ng-container>
+    
+      <!-- Updated -->
+      <ng-container matColumnDef="updated">
+        <th mat-header-cell *matHeaderCellDef> Updated </th>
+        <td mat-cell *matCellDef="let element"> {{element.updated}} </td>
+      </ng-container>
+    
+      <!-- s1 -->
+      <ng-container matColumnDef="s1">
+        <th mat-header-cell *matHeaderCellDef> S1 </th>
+        <td mat-cell *matCellDef="let element"> {{element.s1}} </td>
+      </ng-container>
+  
+      <!-- s2 -->
+      <ng-container matColumnDef="s2">
+          <th mat-header-cell *matHeaderCellDef> S2 </th>
+          <td mat-cell *matCellDef="let element"> {{element.s2}} </td>
+        </ng-container>
+  
+      <!-- s3 -->
+      <ng-container matColumnDef="s3">
+          <th mat-header-cell *matHeaderCellDef> S3 </th>
+          <td mat-cell *matCellDef="let element"> {{element.s3}} </td>
+        </ng-container>
+  
+      <!-- P&A -->
+      <ng-container matColumnDef="pna">
+          <th mat-header-cell *matHeaderCellDef> P&A </th>
+          <td mat-cell *matCellDef="let element"> {{element.pna}} </td>
+        </ng-container>
+      
+      <!-- Code -->
+      <ng-container matColumnDef="code">
+          <th mat-header-cell *matHeaderCellDef> Code </th>
+          <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+        </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [length]="100"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Select page">
+</mat-paginator>
+</div>
