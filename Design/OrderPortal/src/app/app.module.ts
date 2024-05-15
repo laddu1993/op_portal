@@ -35,6 +35,7 @@ import { AdditemComponent } from './component/partsportal/popup/additem/additem.
 import { RemoveitemComponent } from './component/partsportal/popup/removeitem/removeitem.component';
 import { ClearconfirmationComponent } from './component/partsportal/popup/clearconfirmation/clearconfirmation.component';
 import { SuggestComponent } from './component/partsportal/popup/suggest/suggest.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 
 
@@ -77,7 +78,8 @@ import { SuggestComponent } from './component/partsportal/popup/suggest/suggest.
     MatSidenavModule,
     MatIconModule,
     MatMenuModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

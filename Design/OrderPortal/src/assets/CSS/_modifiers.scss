@@ -39,17 +39,17 @@ color: $Grey-600;
 {
 border-color: $Grey-400;
 }
-.searchip 
-{
+// .searchip 
+// {
 
 
-    .mat-mdc-form-field-subscript-wrapper
-    {
-        display: none;
-    }
-}
+//     .mat-mdc-form-field-subscript-wrapper
+//     {
+//         display: none;
+//     }
+// }
 
-// mat-paginator
+// mat paginator
 .mat-mdc-paginator-container
 {
     background-color: $Grey-100;
@@ -58,7 +58,7 @@ border-color: $Grey-400;
 
 
 
-    // mat-button-toggle
+    // mat button toggle
     .mat-button-toggle-appearance-standard.mat-button-toggle-checked
     {
         background-color: $Hasqvarna-Blue-10 !important;        
@@ -93,7 +93,7 @@ border-color: $Grey-400;
     }
     
     
-    // mat-expansion-panel
+    // mat expansion panel
     .mat-expansion-panel:not([class*=mat-elevation-z])
     {
         box-shadow: none !important;
@@ -177,7 +177,7 @@ border-color: $Grey-400;
 
  
     
-    // mat-checkbox
+    // mat checkbox
     .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background, .mdc-checkbox .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background, .mdc-checkbox .mdc-checkbox__native-control[data-indeterminate=true]:enabled~.mdc-checkbox__background
     {
         border-color: $Hasqvarna-Blue !important;
@@ -197,7 +197,7 @@ border-color: $Grey-400;
 
 
 
-     // mat-tabs
+     // mat tabs
     .mat-tab-group {
         margin-bottom: 48px;
       }
@@ -238,10 +238,8 @@ display: none;
     }
     .mat-mdc-menu-panel
     {
+        min-width: 170px !important;
         border-radius: 6px !important;
-    }
-    .mat-mdc-menu-panel
-    {
         box-shadow: 0px 4px 15.1px 0px rgba(0, 0, 0, 0.15) !important;
     }
     .mat-mdc-menu-item-text img
@@ -274,6 +272,12 @@ margin-right: 8px;
     {
         padding:0 24px 24px;
         border-radius:6px !important;
+    }
+
+    //mat progress bar
+
+    .mdc-linear-progress__bar-inner {
+        border-color:$Active !important;
     }
 
 
