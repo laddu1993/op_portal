@@ -19,7 +19,7 @@
             </div>
             <div class="right-block">
                 <div class="btn-grp">
-                    <button type="button" class="btn btn__secondary">Clear</button>
+                    <button type="button" class="btn btn__secondary" (click)="openClearconfirmation()">Clear</button>
                     <button type="button" class="btn btn__primary">Submit</button>
                 </div>
                 <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="more-options">
@@ -30,7 +30,7 @@
                     <img src="../../../assets/import-icon.svg" alt="">
                     <span>Import</span>
                   </button>
-                  <button mat-menu-item>
+                  <button mat-menu-item (click)="openImportorder()">
                     <img src="../../../assets/export-icon.svg" alt="">
                     <span>Export</span>
                   </button>
@@ -38,7 +38,7 @@
                     <img src="../../../assets/tutorials-icon.svg" alt="">
                     <span>Tutorials</span>
                   </button>
-                  <button mat-menu-item>
+                  <button mat-menu-item (click)="openLegends()">
                     <img src="../../../assets/legends-icon.svg" alt="">
                     <span>Legends</span>
                   </button>
@@ -46,26 +46,39 @@
             </div>
         </div>  
 <div class="row">
-    <div class="col-6">
+    <div class="col">
         <div class="inner-container inner-container__title-small-wo-border">
             <h3>Order Estimates</h3>
         </div>
-        <div class="ctrgroup-outer">
+
+
+<div class="fluid-container">
+        <div class="ctrgroup-outer row g-3">
+         
+          <div class="col">
             <div class="counterbox">
                 <h1>$5,727.00</h1>
                 <p>Before Discounts</p>
-            </div>
+            </div></div>
+
+            <div class="col">
             <div class="counterbox">
                 <h1>---</h1>
                 <p>AYP</p>
-            </div>
+            </div></div>
+
+            <div class="col">
             <div class="counterbox">
                 <h1>$5,727.00</h1>
                 <p>After Discounts</p>
-            </div>
+            </div></div>
+
         </div>
+      </div>
+
+
     </div>
-    <div class="col-6">
+    <div class="col">
         <div class="inner-container inner-container__title-small-wo-border">
             <h3>Level</h3>            
         </div>
@@ -122,8 +135,8 @@
             </div>
             <div class="right-block">
                 <div class="btn-grp">
-                    <button type="button" class="btn btn__pl-wicon"><img src="../../../../assets/suggest-icon.svg" class="bt-icon" alt="">Suggest</button>
-                    <button type="button" class="btn btn__pl-wicon"><img src="../../../../assets/plus-icon.svg" class="bt-icon" alt="">Add Item</button>
+                    <button type="button" class="btn btn__pl-wicon" (click)="openSuggest()"><img src="../../../../assets/suggest-icon.svg" class="bt-icon" alt="">Suggest</button>
+                    <button type="button" class="btn btn__pl-wicon" (click)="openAdditem()"><img src="../../../../assets/plus-icon.svg" class="bt-icon" alt="">Add Item</button>
                 </div>
                 <mat-form-field appearance="outline" class="searchip" subscriptSizing="dynamic">
                   <input matInput placeholder="Search">

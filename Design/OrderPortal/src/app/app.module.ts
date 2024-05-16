@@ -36,6 +36,7 @@ import { RemoveitemComponent } from './component/partsportal/popup/removeitem/re
 import { ClearconfirmationComponent } from './component/partsportal/popup/clearconfirmation/clearconfirmation.component';
 import { SuggestComponent } from './component/partsportal/popup/suggest/suggest.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { ImportorderComponent } from './component/partsportal/popup/importorder/importorder.component';
 
 
 
@@ -59,7 +60,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     AdditemComponent,
     RemoveitemComponent,
     ClearconfirmationComponent,
-    SuggestComponent
+    SuggestComponent,
+    ImportorderComponent
   ],
   imports: [
     BrowserModule,
