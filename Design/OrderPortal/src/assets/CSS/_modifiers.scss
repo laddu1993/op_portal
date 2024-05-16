@@ -281,4 +281,29 @@ margin-right: 8px;
     }
 
 
+    //nav bar
+    .navbar
+    {
+        padding:16px 24px;
+    }
+    .navbar-brand
+    {
+        flex-grow: 1;
+    }
+    .navbar-collapse
+    {
+        flex-grow: 0;
+    }
+    .nav-link
+    {
+        color:$Grey-400;
+        font-weight: 500;
+    }
+   
+    .navbar-nav .nav-link.active, .navbar-nav .nav-link.show, .nav-link:focus, .nav-link:hover
+    {
+        color: $Hasqvarna-Blue;
+    }
+
+
 
