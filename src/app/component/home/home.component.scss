@@ -1,0 +1,29 @@
+.absolute-right
+{
+    position: absolute;
+    right: 24px;
+    top: 16px;
+    z-index: 2;
+}
+.content-container
+{
+    padding-top:0;
+}
+
+.tab-header {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+}
+  
+.home-icon {
+    width: 50px; /* Adjust the size as needed */
+    height: 50px; /* Adjust the size as needed */
+    margin-right: 8px; /* Add some space between the icon and the tabs */
+}
+  
+
+
+::ng-deep .mat-mdc-tab-body {
+    min-height: calc(100vh - 222px);
+}

@@ -1,0 +1,127 @@
+<!-- No Data Block -->
+<div class="row h-100 w-100 p-3 align-items-center no-data-block" *ngIf="isDifferentContentVisible; else differentContent">
+  <div class="col-12">
+     <img [src]="assetUrl + 'no-data-icon.svg'" alt="">
+     <h2>No Dealer Selected</h2>
+     <p>Click on choose dealer to select a dealer and view their details.</p>
+     <div class="btn-grp" *ngIf="!isLoading" >
+        <button type="button" class="btn btn__secondary" (click)="demoOrder()">Order Quote</button>
+        <button type="button" class="btn btn__primary" (click)="openPopup()">Choose Dealer</button>
+     </div>
+  </div>
+</div>
+<!-- CUSTOMER INFO TAB -->
+<ng-template #differentContent>
+  <form [formGroup]="form">
+     <div class="row">
+        <div class="inner-container inner-container__title">
+           <h1 style="padding-left: 18px;">Customer Information</h1>
+           <div class="button-container">
+               <button type="button" class="btn btn__pl-wicon" (click)="demoOrder()" *ngIf="!showAccountInfo">
+                  Switch to Order Quote
+               </button>
+               <button type="button" class="btn btn__pl-wicon" (click)="openPopup()">
+                  <img [src]="assetUrl + 'change-dealer-icon.svg'" class="bt-icon" alt="">Change Dealer
+               </button>
+            </div>        
+        </div>
+        <div class="inner-container inner-container__details">
+           <input type="hidden" id="slt_dealer_id" name="slt_dealer_id">
+           <div class="detail-inner" style="padding-left: 18px;" *ngIf="!showAccountInfo">
+              <p>Account No</p>
+              <h3 id="account_number" #account_number>54321</h3>
+              <!-- <input type="text" class="form-control vlcustom" formControlName="accountNumber" (keyup)="onAccountNumberKey($event)" *ngIf="showAccountInfo"> -->
+           </div>
+           <div class="detail-inner" [ngStyle]="!showAccountInfo ? {'padding-left': '0px'} : {'padding-left': '18px'}">
+              <p>Name</p>
+              <h3 id="org_name" *ngIf="!showAccountInfo" #org_name>Demo User</h3>
+              <input type="text" class="form-control vlcustom" formControlName="customerName" (keyup)="onCustomerNameKey($event)" *ngIf="showAccountInfo">
+           </div>
+           <div class="detail-inner" *ngIf="compCode == 'USF'">
+            <p>Discount Level</p>
+              <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                 <mat-select placeholder="Discount Level" formControlName="DiscountLevel" id="vlDiscountLevel" #vlDiscountLevel (valueChange)="DiscountLevelChanged($event)">
+                    <mat-option value="0">BA (Base) (0%)</mat-option>
+                    <mat-option value="1">Bronze (1%)</mat-option>
+                    <mat-option value="2">Silver (2%)</mat-option>
+                    <mat-option value="3">Gold (3%)</mat-option>
+                    <mat-option value="4">Platinum (4%)</mat-option>
+                    <mat-option value="5">Crown (6%)</mat-option>
+                 </mat-select>
+              </mat-form-field>
+           </div>
+           <div class="detail-inner" *ngIf="compCode == 'CDA'">
+            <p>Discount Level</p>
+              <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                 <mat-select placeholder="Discount Level" formControlName="DiscountLevel" id="vlDiscountLevel" #vlDiscountLevel (valueChange)="DiscountLevelChanged($event)">
+                    <mat-option value="0">Service Only (0%)</mat-option>
+                    <mat-option value="0">Silver (0%)</mat-option>
+                    <mat-option value="1">Gold (1%)</mat-option>
+                    <mat-option value="2">Platinum (2%)</mat-option>
+                    <mat-option value="3">Titanium (3%)</mat-option>
+                    <mat-option value="5">Crown (5%)</mat-option>
+                    <mat-option value="7">Crown Elite (7%)</mat-option>
+                 </mat-select>
+              </mat-form-field>
+           </div>
+           <div class="detail-inner" *ngIf="compCode != 'CDA'">
+            <p>Parts Level</p>
+              <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                 <mat-select placeholder="Parts Level" formControlName="PartsLevel" id="vlPartsLevel" #vlPartsLevel>
+                    <mat-option value="0">BA (Base) (0%)</mat-option>
+                    <mat-option value="1">Bronze (0%)</mat-option>
+                    <mat-option value="2">Silver (6%)</mat-option>
+                    <mat-option value="3">Gold (8%)</mat-option>
+                 </mat-select>
+              </mat-form-field>
+           </div>
+           <div class="spacer-12"></div>
+           <div class="detail-inner">
+            <p>Promo Code</p>
+              <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                 <mat-select placeholder="Promo Code" formControlName="PromoCode" id="vlPromoCode" #vlPromoCode (selectionChange)="PromoChanged($event)">
+                    <mat-option value="PSOSPRING">PSOSPRING</mat-option>
+                    <mat-option value="NEWDEALER">NEWDEALER</mat-option>
+                 </mat-select>
+              </mat-form-field>
+           </div>
+        </div>
+        <!-- <div class="inner-container inner-container__title-small-wo-border">
+           <h3>Previous orders</h3>
+        </div>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 summary-table">
+           <button mat-flat-button color="primary">Primary</button>
+           <ng-container matColumnDef="shipment">
+              <th mat-header-cell *matHeaderCellDef> Shipment </th>
+              <td mat-cell *matCellDef="let element"> {{element.shipment}} </td>
+           </ng-container>
+           <ng-container matColumnDef="s1date">
+              <th mat-header-cell *matHeaderCellDef> xxxx-xx-xx </th>
+              <td mat-cell *matCellDef="let element"> {{element.s1date}} </td>
+           </ng-container>
+           <ng-container matColumnDef="s2date">
+              <th mat-header-cell *matHeaderCellDef> xxxx-xx-xx </th>
+              <td mat-cell *matCellDef="let element"> {{element.s2date}} </td>
+           </ng-container>
+           <ng-container matColumnDef="s3date">
+              <th mat-header-cell *matHeaderCellDef> xxxx-xx-xx </th>
+              <td mat-cell *matCellDef="let element"> {{element.s3date}} </td>
+           </ng-container>
+           <ng-container matColumnDef="s1">
+              <th mat-header-cell *matHeaderCellDef> xxxx-xx-xx </th>
+              <td mat-cell *matCellDef="let element"> {{element.s1}} </td>
+           </ng-container>
+           <ng-container matColumnDef="s2">
+              <th mat-header-cell *matHeaderCellDef> xxxx-xx-xx </th>
+              <td mat-cell *matCellDef="let element"> {{element.s2}} </td>
+           </ng-container>
+           <ng-container matColumnDef="s3">
+              <th mat-header-cell *matHeaderCellDef> xxxx-xx-xx </th>
+              <td mat-cell *matCellDef="let element"> {{element.s3}} </td>
+           </ng-container>
+           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table> -->
+     </div>
+  </form>
+</ng-template>

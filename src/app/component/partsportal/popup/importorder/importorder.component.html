@@ -1,0 +1,30 @@
+<!-- IMPORT ORDER POPUP -->
+<div class="inner-container inner-container__title-wo-border">
+    <div class="left-block">
+       <h1>Import Order</h1>
+    </div>
+    <div class="right-block">
+      <button (click)="closePopup()"><img [src]="assetUrl + 'close-icon.svg'" alt=""></button>
+    </div>
+ </div>
+ <div class="popup-content popup-content__small row gy-4">
+    <div class="col-12">
+       <p>Please upload the excel file of the order you wish to import.</p>
+       <div style="line-height:2"> Sample CSV: <a [href]="assetUrl + 'sample.csv'">Download here</a></div>
+       <div class="spacer-12"></div>
+       <div class="fileupload">
+          <img [src]="assetUrl + 'upload-icon.svg'" alt="">
+          <div class="txt-wrap">
+            <input type="file" (change)="onFileChange($event)" />
+          </div>
+       </div>
+       <!-- Error Message Display -->
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    </div>
+    <div class="col-12 d-flex justify-content-end">
+       <div class="btn-grp">
+         <button type="button" class="btn btn__secondary" (click)="closePopup()">Cancel</button>
+         <button type="button" class="btn btn__primary" (click)="importOrder()">Import</button>
+       </div>
+    </div>
+ </div>

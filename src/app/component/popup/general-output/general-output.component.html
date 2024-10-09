@@ -1,0 +1,19 @@
+<div class="inner-container inner-container__title-wo-border">
+    <div class="left-block">
+        <h1>Message</h1>
+    </div>
+    <div class="right-block">
+        <button (click)="closePopup()"><img [src]="assetUrl + 'close-icon.svg'" alt="Close"></button>
+    </div>
+</div>
+<div class="popup-content popup-content__small row gy-4">
+    <div class="col-12">
+        <div class="spacer-12"></div>
+        <p [style.white-space]="'pre-wrap'">{{ response.message }}</p> <!-- Add pre-wrap to handle newlines -->
+    </div>
+    <div class="col-12 d-flex justify-content-end">
+        <div class="btn-grp">
+            <button type="button" class="btn btn__secondary" (click)="closePopup()">Close</button>
+        </div>
+    </div>
+</div>

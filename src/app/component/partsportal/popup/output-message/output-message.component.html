@@ -1,0 +1,23 @@
+<!-- SUGGEST POPUP -->
+<div class="inner-container inner-container__title-wo-border">
+    <div class="left-block">
+       <h1>Order Submitted!</h1>
+    </div>
+ </div>
+ <div class="popup-content popup-content__small row gy-4 gx-3">
+    <div class="col-12">
+      <div *ngIf="data.message.order_id && data.message.ship_id" class="form-field-wrap">
+         Order ID: {{data.message.order_id}}-{{data.message.ship_id}}<br>
+         Your order has been submitted to your sales agent.
+      </div>  
+      <div *ngIf="data.message.OrderID" class="form-field-wrap">
+         Order ID: {{data.message.OrderID}}<br>
+         Your order template has been submitted to Power.
+      </div>   
+    </div>
+    <div class="col-12 d-flex justify-content-end">
+       <div class="btn-grp">
+          <button type="button" class="btn btn__secondary" (click)="closePopup()">Close</button>
+       </div>
+    </div>
+ </div>
