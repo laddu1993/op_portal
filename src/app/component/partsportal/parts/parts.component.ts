@@ -21,6 +21,7 @@ import { environment } from 'src/environments/environment';
 import { Title } from '@angular/platform-browser';
 import { GeneralOutputComponent } from '../../popup/general-output/general-output.component';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface PartsTable {
   blank: 'manually' | 'ordered' | '-';
@@ -91,6 +92,7 @@ export class PartsComponent implements OnInit, AfterViewInit {
     private accountService: AccountService, 
     private excelDownloadService: ExcelDownloadService,
     private router: Router,
+    private snackBar: MatSnackBar,
     private loaderService: LoaderService) { 
     this.suggestForm = this.fb.group({
       selectedPercentage: [''],
@@ -533,7 +535,13 @@ export class PartsComponent implements OnInit, AfterViewInit {
       this.loaderService.show();
       this.service.updateOrder(orderQuantity.toString(), element.sku, price).subscribe({
         next: (res) => {
-          console.log('Order updated:', res);
+          //console.log('Order updated:', res);
+          this.snackBar.open('Order Updated Successfully!', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+            panelClass: ['green-snackbar'] // Apply the custom CSS class here
+          });
           this.loaderService.hide();
         },
         error: (err) => {

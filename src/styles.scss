@@ -308,3 +308,17 @@ margin-right: 14px;
     position: sticky;
     top: 0;
 }  
+
+/* Define the green color for the toaster message */
+.mdc-snackbar__surface {
+    background-color: #227730 !important; /* Green background */
+    color: white !important;              /* White text color */
+}
+
+.mdc-snackbar__label {
+    color: white !important; /* Ensure the message text is white */
+}
+
+.mdc-snackbar__actions button {
+    color: white !important; /* Ensure the button (action text) is white */
+}

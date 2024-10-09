@@ -54,6 +54,7 @@ import { SkeletonLoaderComponent } from './component/skeleton-loader/skeleton-lo
 import { ProgressBarComponent } from './component/progress-bar/progress-bar.component';
 import { NotFoundComponent } from './component/not-found/not-found.component';
 import { IsMaintenanceComponent } from './is-maintenance/is-maintenance.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -113,7 +114,8 @@ import { IsMaintenanceComponent } from './is-maintenance/is-maintenance.componen
     MatSortModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    AgGridAngular
+    AgGridAngular,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
