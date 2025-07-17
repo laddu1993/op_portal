@@ -1,0 +1,54 @@
+<!-- ADD ITEM POPUP -->
+<div class="inner-container inner-container__title-wo-border">
+    <div class="left-block">
+        <h1>Add Item</h1>
+    </div>
+    <div class="right-block">
+        <button (click)="closePopUp()"><img [src]="assetUrl + 'close-icon.svg'" alt="Close Popup"></button>
+    </div>
+</div>
+
+<div class="popup-content popup-content__small row gy-4">
+    <div class="col-12">
+        <div class="input-w-btn">
+            <mat-form-field appearance="outline" class="no-float-label" subscriptSizing="dynamic">
+                <input matInput #skuInput [(ngModel)]="sku" placeholder="Enter Part Number" type="text" (input)="onInput($event)">
+            </mat-form-field>
+            <button type="button" class="btn btn__primary" (click)="searchSKU()">Search</button>
+        </div>
+        <div class="spacer-12"></div>
+        <!-- Display error message if exists -->
+        <div class="col-12" *ngIf="errorMessage" class="error-message">
+            <p class="errorMessage">{{ errorMessage }}</p>
+        </div>
+        Please enter the part number of the item you wish to find in the search box and click on 'Search'.
+    </div>
+    <div class="col-12" *ngIf="products?.desc">
+        <div class="result-block">
+            <h2>Result</h2>
+            <p *ngIf="products?.desc">Description : {{ products.desc }}</p>
+            <p *ngIf="products?.price">Price : ${{ products.price }}</p>
+        </div>
+        <div class="spacer-12"></div>
+        <div class="form-field-wrap">
+            <mat-label>Enter Quantity</mat-label>
+            <mat-form-field appearance="outline" class="no-float-label" subscriptSizing="dynamic">
+                <input type="text" matInput [(ngModel)]="quantity" placeholder="ex. 200" (ngModelChange)="onQuantityChange($event)">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="hint" role="alert">
+            <h3>Note : </h3> If this item already exists in your order, the quantity entered here will override
+            the existing quantity.
+        </div>
+    </div>
+    <div class="col-12 d-flex justify-content-end">
+        <div class="btn-grp">
+          <button type="button" class="btn btn__secondary" (click)="closePopUp()">Cancel</button>
+          <!-- Disable 'Add' button if the price is empty or zero -->
+          <button type="button" class="btn btn__primary" (click)="addItenBtn()" 
+            [disabled]="!products?.price || products?.price === 0">Add</button>
+        </div>
+    </div>
+</div>

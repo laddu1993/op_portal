@@ -8,6 +8,6 @@ import { environment } from 'src/environments/environment';
 })
 export class AppComponent {
   envName = environment.name;
-  isUATMode: boolean = environment.uat;
+  isUATMode: boolean = environment.production;
   title = 'OP Portal';
 }

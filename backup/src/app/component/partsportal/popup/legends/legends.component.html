@@ -1,0 +1,20 @@
+<!-- LEGENDS POPUP -->
+
+<div class="inner-container inner-container__title-wo-border">
+    <div class="left-block">
+        <h1>Legends</h1>
+    </div>
+    <div class="right-block">
+        <button (click)="closePopUp()"><img [src]="assetUrl + 'close-icon.svg'" alt=""></button>
+    </div>
+</div>
+<div class="popup-content popup-content__small">
+<ul class="icon-text-list">
+    <li><img [src]="assetUrl + 'new-badge.svg'" alt=""> New product</li>
+    <li><img [src]="assetUrl + 'best-seller-badge.svg'" alt=""> A best Selling item that you have not purchased</li>
+    <li><img [src]="assetUrl + 'ordered-before-badge.svg'" alt=""> This is an item that you have ordered in the past</li>
+    <li><img [src]="assetUrl + 'pro-fleet-badge.svg'" alt=""> Professional Fleet</li>
+    <li><img [src]="assetUrl + 'spl-promo-badge.svg'" alt=""> Special Promotion offers</li>
+    <li><img [src]="assetUrl + 'manually-added-badge.svg'" alt=""> Item was manually added via searching</li>
+</ul>
+</div>

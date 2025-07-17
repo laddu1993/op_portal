@@ -1,0 +1,40 @@
+<!-- ADD TO TEMPLATES POPUP -->
+<div class="inner-container inner-container__title-wo-border">
+    <div class="left-block">
+       <h1>New Template</h1>
+    </div>
+    <div class="right-block">
+       <button (click)="closePopup()"><img [src]="assetUrl + 'close-icon.svg'" alt=""></button>
+    </div>
+ </div>
+ <div class="popup-content popup-content__small row gy-4">
+    <div class="col-12">
+       <div class="row gy-1">
+          <div class="col-12">
+             <div class="form-field-wrap">
+                <mat-label>Enter template name</mat-label>
+                <mat-form-field appearance="outline" class="no-float-label">
+                   <input matInput [(ngModel)]="templateName" placeholder="">
+                </mat-form-field>
+             </div>
+          </div>
+         <!-- Display error message if exists -->
+         <div class="col-12" *ngIf="errorMessage" class="error-message">
+            <p class="errorMessage">{{ errorMessage }}</p>
+         </div>
+         <div class="spacer-12"></div>
+         <div class="col-12">
+            <div class="hint" role="alert">
+                <h3>Note : </h3>
+                Keep the name short and simple. Avoid using special characters.
+             </div>
+          </div>
+       </div>
+    </div>
+    <div class="col-12 d-flex justify-content-end">
+       <div class="btn-grp">
+          <button type="button" (click)="closePopup()" class="btn btn__secondary">Cancel</button>
+          <button type="button" (click)="saveOrder()" class="btn btn__primary">Save</button>
+       </div>
+    </div>
+ </div>

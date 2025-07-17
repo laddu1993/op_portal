@@ -1,0 +1,86 @@
+<div class="pg-outer-container">
+
+    <div class="content-container content-container__top-zero-padding">
+       <div class="inner-container inner-container__title filter-wrapper">
+          <div class="left-block">
+             <h1>Load History</h1>
+          </div>
+       </div>
+    </div>
+    <div class="spacer-12"></div>
+    <!-- Quick View Summary for Last Ordered SKU -->
+    <div class="content-container content-container__top-zero-padding">
+        <div class="inner-container inner-container__title">
+            <div class="last-ordered-card" *ngIf="lastOrderedItem">
+                <mat-icon class="clock-icon"></mat-icon>
+                <div class="last-ordered-details">
+                    <h3>Last Ordered SKU</h3>
+                    <p>SKU: {{ lastOrderedItem.sku }} | {{ lastOrderedItem.description }} | Quantity: {{ lastOrderedItem.quantity }} | {{ lastOrderedItem.date_created | date:'d MMM y' }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="spacer-12"></div>
+    <div class="content-container content-container__top-zero-padding">
+        <div class="inner-container inner-container__title-wo-border filter-wrapper">
+            <div class="filter-container">
+                <!-- Date Filter Dropdown -->
+                <mat-form-field appearance="outline" class="date-filter">
+                    <mat-select placeholder="Filter by Date" (selectionChange)="filterByDate($event.value)">
+                        <mat-option value="all">All Dates</mat-option>
+                        <mat-option value="last7">Last 7 Days</mat-option>
+                        <mat-option value="last30">Last 30 Days</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <mat-form-field appearance="outline" class="searchip" subscriptSizing="dynamic">
+                    <input matInput placeholder="Search" (input)="applyFilter($event)">
+                    <img [src]="assetUrl + 'search-icon.svg'" alt="Search Icon">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+          <div *ngIf="isLoading">
+             <app-skeleton-loader [rowCount]="7"></app-skeleton-loader>
+          </div>
+          <div class="table-container" *ngIf="!isLoading">
+             <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+                <!-- SKU Column -->
+                <ng-container matColumnDef="sku">
+                   <th mat-header-cell *matHeaderCellDef mat-sort-header>SKU</th>
+                   <td mat-cell *matCellDef="let element">{{ element.sku }}</td>
+                </ng-container>
+                <!-- Date Created Column -->
+                <ng-container matColumnDef="date_created">
+                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Ordered Date</th>
+                   <td mat-cell *matCellDef="let element">{{ element.date_created | date:'d MMM y' }}</td>
+                </ng-container>
+                <!-- Description Column -->
+                <ng-container matColumnDef="description">
+                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+                   <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+                </ng-container>
+                <!-- Price Column -->
+                <!-- <ng-container matColumnDef="price">
+                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
+                   <td mat-cell *matCellDef="let element">{{ element.price }}</td>
+                </ng-container> -->
+                <!-- Quantity Column -->
+                <ng-container matColumnDef="quantity">
+                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Ordered quantity</th>
+                   <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
+                </ng-container>
+                <!-- Header and Row Definitions -->
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+             </table>
+            <mat-paginator 
+             [pageSize]="5" 
+             [pageSizeOptions]="[5, 10, 20]" 
+             showFirstLastButtons>
+            </mat-paginator>
+          </div>
+       </div>
+    </div>
+ </div>

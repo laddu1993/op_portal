@@ -11,16 +11,17 @@ import { environment } from 'src/environments/environment';
 })
 export class ExcelDownloadService {
 
-  private apiUrl = environment.apiURL;
+  private isMode = environment.production;
+  private apiUrl = !this.isMode ? environment.uatApiBaseUrl : environment.prodApiBaseUrl;
   acct: string | null = null;
   private compCode: string | null = null;
   constructor(private http: HttpClient, private accountService: AccountService ) { }
 
   downloadExcelFile(): Observable<Blob> {
     this.acct = this.accountService.getAccount(); // Get the acct parameter
-    console.log('VL acct', this.acct);
+    //console.log('VL acct', this.acct);
     this.compCode = this.accountService.getCompCode();
-    console.log('VL compCode', this.compCode);
+    //console.log('VL compCode', this.compCode);
     return this.http.get(this.apiUrl+`pp_excel_download?compCode=`+this.compCode+`&acctNum=`+ this.acct, { responseType: 'blob' });
   }
 

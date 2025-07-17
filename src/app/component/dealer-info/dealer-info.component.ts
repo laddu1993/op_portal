@@ -225,6 +225,7 @@ export class DealerInfoComponent implements OnInit, AfterViewInit{
   @ViewChild('orderSummaryPanel') orderSummaryPanel!: MatExpansionPanel;
   private dataLoaded: boolean = false;
   private skuBasedDiscountsCDA: { [sku: number]: number } = {};
+  private isTokenGenerationEnabled = environment.tokenGenerationEnabled; // Add this flag in your environment file
   @ViewChildren(MatExpansionPanel) panels!: QueryList<MatExpansionPanel>;
 
   constructor(private cdr: ChangeDetectorRef, 
@@ -339,12 +340,40 @@ export class DealerInfoComponent implements OnInit, AfterViewInit{
     this.subscribeToDiscountData();
   }
 
+  login(): void {
+    this.service.login().subscribe(
+      (res: any) => {
+        if (res && res.token) {
+          // Store the login token in local storage
+          localStorage.setItem('loginToken', res.token);
+          // Call functions after successful login
+          this.initializeSubscriptions();
+          this.initializeTabList();
+          this.setupOrderSubmission();
+          this.initializeMinDates();
+        } else {
+          console.error('Login failed: Token not received.');
+        }
+      },
+      (error) => {
+        console.error('Error during login:', error);
+      }
+    );
+  }
+
   ngOnInit(): void {
-    this.loadDiscounts();
-    this.initializeSubscriptions();
-    this.initializeTabList();
-    this.setupOrderSubmission();
-    this.initializeMinDates();
+    if(this.compCode == 'CDA'){
+      this.loadDiscounts();
+    }
+    if (this.isTokenGenerationEnabled) {
+      this.login();
+    }else{
+      // Call functions after successful login
+      this.initializeSubscriptions();
+      this.initializeTabList();
+      this.setupOrderSubmission();
+      this.initializeMinDates();
+    }
   }
 
   private loadDiscounts(): void {
@@ -828,7 +857,7 @@ export class DealerInfoComponent implements OnInit, AfterViewInit{
       if(this.compCode == 'USF'){
         gasHHMainCatValues = ['1054', '6331', '2701', '6315', '6212', '2900', '6002', '6001', 
         '6013', '6320', '6334', '6324', '6314', '6332', '6311', '3300', 
-        '3301', '6312', '1052', '2260'];
+        '3301', '6312', '1052'];
       }else{
         gasHHMainCatValues = ['8429', '2253', '8427', '2271', '8431', '8430',
         '2900', '6002', '6001', '6013', '6314', '1054', '6331', '2701', '6315', '6212', '6320', '6324', '1052', '6312', '3300', '2562', '6317', '6316', '6311', '3301','6332'];
@@ -884,9 +913,12 @@ export class DealerInfoComponent implements OnInit, AfterViewInit{
     const OtherTotals = calculateTotals(this.orderCosts.filter(item => {
       let otherMainCatValues: string[];
       if(this.compCode == 'USF'){
-        otherMainCatValues = ['8320', '8348', '6431', '9352', '2232', '2231', '9353',
-        '8427', '2251', '8428', '8429', '2271', '8431', '8430', '2253', 
-        '2281', '8432', '2562', '6316', '6317', '2120', '1230', '8435'];
+        otherMainCatValues = [
+          '8320', '8348', '6431', '9352', '2232', '2231', '9353', '8427', '2251', 
+          '8428', '8429', '2271', '8431', '8430', '2253', '2281', '8432', '2562', 
+          '6316', '6317', '2120', '1230', '8435', '8850', '4152', '8062', '4452', 
+          '8052', '9669', '7277', '2260', '4453'
+        ];      
       }else{
         otherMainCatValues = [
           '9352', '2232', '2231', '9353', '2120', '8320', '8348', '6431', '8435', '1230', '8435',
@@ -1006,14 +1038,14 @@ export class DealerInfoComponent implements OnInit, AfterViewInit{
     const resiZTRMainCatValues = ['9660', '9661'];
     const mainCatValuesMap: { [key: string]: { gasHHMainCatValues: string[], commercialZTR: string[], otherMainValues: string[] } } = {
       'USF': {
-        gasHHMainCatValues: ['1054', '6331', '2701', '6315', '6212', '2900', '6002', '6001', '6013', '6320', '6334', '6324', '6314', '6332', '6311', '3300', '3301', '6312', '1052', '2260'],
+        gasHHMainCatValues: ['1054', '6331', '2701', '6315', '6212', '2900', '6002', '6001', '6013', '6320', '6334', '6324', '6314', '6332', '6311', '3300', '3301', '6312', '1052'],
         commercialZTR: ['8434', '9664', '7266'],
-        otherMainValues: ['8320', '8348', '6431', '9352', '2232', '2231', '9353', '8427', '2251', '8428', '8429', '2271', '8431', '8430', '2253', '2281', '8432', '2562', '6316', '6317', '2120', '1230', '8435']
+        otherMainValues: ['8320', '8348', '6431', '9352', '2232', '2231', '9353', '8427', '2251', '8428', '8429', '2271', '8431', '8430', '2253', '2281', '8432', '2562', '6316', '6317', '2120', '1230', '8435', '8850', '4152', '8062', '4452', '8052', '9669', '7277', '2260', '4453']
       },
       'CDA': {
         gasHHMainCatValues: ['8429', '2253', '8427', '2271', '8431', '8430', '2900', '6002', '6001', '6013', '6314', '1054', '6331', '2701', '6315', '6212', '6320', '6324', '1052', '6312', '3300', '2562', '6317', '6316', '6311', '3301','6332'],
         commercialZTR: ['8434', '7266', '7263', '9664'],
-        otherMainValues: ['9352', '2232', '2231', '9353', '2120', '8320', '8348', '6431', '8435', '1230', '8435', '6430', '8432', '2281', '2260', '8428', '2251']
+        otherMainValues: ['9352', '2232', '2231', '9353', '2120', '8320', '8348', '6431', '8435', '1230', '6430', '8432', '2281', '2260', '8428', '2251']
       }
     };
 
@@ -1119,7 +1151,7 @@ export class DealerInfoComponent implements OnInit, AfterViewInit{
     if(this.compCode == 'USF'){
       gasHHMainCatValues = ['1054', '6331', '2701', '6315', '6212', '2900', '6002', '6001', 
       '6013', '6320', '6334', '6324', '6314', '6332', '6311', '3300', 
-      '3301', '6312', '1052', '2260'];
+      '3301', '6312', '1052'];
     }else{
       gasHHMainCatValues = ['8429', '2253', '8427', '2271', '8431', '8430', 
       '2900', '6002', '6001', '6013', '6314', '1054', '6331', '2701', '6315', '6212', '6320', '6324', '1052', '6312', '3300', '2562', '6317', '6316', '6311', '3301','6332'];

@@ -1,0 +1,97 @@
+.product-acc-outer {
+    .searchip {
+        width: 100%;
+    }
+
+    .Product-list {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+/* CSS for highlighting rows */
+
+.highlight-row {
+    background-color: #9FE2BF;
+    color: black; /* Ensures text is readable */
+}
+
+.vlcolor{
+    color: #dc3545;
+}
+
+.table-container table {
+	position:relative;
+}
+
+.fixed-width {
+    width: 350px;
+    max-width: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+.fixed-width-common {
+    width: 150px;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.no-records-message {
+    text-align: center;
+    font-size: 16px;
+    margin-top: 20px;
+    color: #888;
+}
+
+.left-block .highlighted-text {
+    background-color: yellow; /* Highlight the background */
+    padding: 4px;
+    font-weight: bold; /* Make the text bold (optional) */
+    position: relative;
+}
+
+.left-block .highlighted-text::before {
+    content: "⚠️ "; /* Add a note mark or symbol */
+    color: red; /* Customize the color of the note mark */
+    font-size: 1.2em;
+    margin-right: 5px; /* Add some space after the note mark */
+}
+  
+// .nab-date {
+//     display: inline-block;
+//     margin-left: 5px; /* Add some spacing before the date */
+//     font-size: 0.9em; /* Slightly smaller font size */
+//     color: #ff5722; /* Customize the color for the nab_date */
+//     font-weight: bold; /* Make the nab_date bold */
+//     background-color: #fff8e1; /* Light background for nab_date */
+//     padding: 2px 5px;
+//     border-radius: 3px;
+// }
+
+.left-block p {
+    margin-top: 15px; /* If extra spacing is needed */
+}
+
+.desc-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    white-space: nowrap;
+}
+
+.desc {
+    white-space: nowrap;
+    max-width: 75%;  /* Adjust the width to allow space for nab_date */
+}
+
+.nab-date {
+    flex-shrink: 0; /* Ensure the date doesn't shrink */
+    color: #ff5722; /* Customize the color for the nab_date */
+    font-weight: bold; /* Make the nab_date bold */
+    background-color: #fff8e1; /* Light background for nab_date */
+}

@@ -6,6 +6,8 @@ import { Dealer, TabsResponse, TabsResult, Templates, Category, PartProducts, Ad
 import { BehaviorSubject } from 'rxjs';
 import { AccountService } from './account.service';
 import { environment } from 'src/environments/environment';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { EncryptionService } from './encryption.service';
 
 @Injectable({
     providedIn: 'root'
@@ -13,8 +15,14 @@ import { environment } from 'src/environments/environment';
 
 export class MasterService {
 
-  private apiUrl = environment.apiURL;
+  private isMode = environment.production;
+  private isTokenGenerationEnabled = environment.tokenGenerationEnabled; // Add this flag in your environment file
+  //private apiUrl = !this.isMode ? environment.uatApiBaseUrl : environment.prodApiBaseUrl;
+  private apiUrl = !this.isMode ? environment.uatOpPortalApiBaseUrl : environment.prodOpPortalApiBaseUrl;
   private CRMURL = environment.CRMURL;
+  private encryptedAidParam: string | null = null;
+  private encryptedAcctParam: string | null = null;
+  private oauth: string | null = null;
   account_number: any;
   private isDifferentContentVisibleSubject = new BehaviorSubject<boolean>(false);
   isDifferentContentVisible$ = this.isDifferentContentVisibleSubject.asObservable();
@@ -22,9 +30,18 @@ export class MasterService {
   aid: string | null = null;
   jsonData: any;
 
-  constructor(private http: HttpClient, private accountService: AccountService ) { }
+  constructor(private http: HttpClient, 
+    private encryptionService: EncryptionService,
+    private route: ActivatedRoute,
+    private accountService: AccountService ) { }
 
   private tokenGenerated(): HttpHeaders {
+    if (!this.isTokenGenerationEnabled) {
+      return new HttpHeaders({
+        'Accept': 'application/json'
+      });
+    }
+  
     const token = localStorage.getItem('loginToken');
     return new HttpHeaders({
       'Authorization': `Bearer ${token || ''}`,
@@ -61,14 +78,19 @@ export class MasterService {
     const username = 'vinil@speridian.com';
     const password = '12345678';
     const encryptedPswd = 'IUKhJMNPHGmYmOOBHC4MjQ==';
+    // Set the headers with an additional boolean parameter
+    const headers = {
+      'Content-Type': 'application/json',
+      'Custom-Boolean-Header': 'true'  // Example boolean parameter in headers (convert boolean to string)
+    };
     // Set the headers
     const body = {
       email: username,
       password: encryptedPswd
     };
-    // Send the encrypted data via HTTPS
+    // Send the encrypted data via HTTPS with headers
     return this.http.post<any>(this.apiUrl + `login`, body, {
-      headers: { 'Content-Type': 'application/json' }
+      headers: headers
     });
   }
 
@@ -78,70 +100,101 @@ export class MasterService {
 
   getCRMURL(){
     this.aid = this.accountService.getAgentId(); // Get the acct parameter
+    const encryptedTestValue = this.encryptionService.encrypt(this.aid || '');
+    console.log('Encrypted Test Value:', encryptedTestValue);
+
+    const decryptedTestValue = this.encryptionService.decrypt(encryptedTestValue);
+    console.log('Decrypted Test Value:', decryptedTestValue);
     return this.http.get<any>(this.apiUrl+`op_getCrmCall?aid=`+this.aid);
   }
   
   getUsers(): Observable<Dealer[]> {
     const headers = this.tokenGenerated();
-    this.aid = this.accountService.getAgentId(); // Get the acct parameter
+    this.aid = this.accountService.getAgentId(); // Get the agent ID
     const terList = this.accountService.getTerritory();
     const compCode = this.accountService.getCompCode();
-    return this.http.get<Dealer[]>(this.apiUrl+`op_dealerlist?aid=`+this.aid+`&compCode=`+compCode+`&terList=`+terList);
+    const url = `${this.apiUrl}op_dealerlist?aid=${this.aid}&compCode=${compCode}&terList=${terList}`;
+    return this.http.get<Dealer[]>(url, { headers }).pipe(
+      catchError((error) => this.handleTokenError(error, () => this.getUsers()))
+    );
   }
 
   getTemplates(orgID?: string): Observable<Templates[]> {
     const headers = this.tokenGenerated();
-    this.aid = this.accountService.getAgentId(); // Get the acct parameter
+    this.aid = this.accountService.getAgentId(); // Get the agent ID
     let url = `${this.apiUrl}op_templatelist?agentID=${this.aid}`;
     if (orgID) {
       url += `&orgID=${orgID}`;
     }
-    return this.http.get<Templates[]>(url);
-  }
+    return this.http.get<Templates[]>(url, { headers }).pipe(
+      catchError((error) => this.handleTokenError(error, () => this.getTemplates(orgID)))
+    );
+  }  
 
   getTabs(): Observable<TabsResult[]> {
     const headers = this.tokenGenerated();
     const compCode = this.accountService.getCompCode();
-    return this.http.get<TabsResult[]>(this.apiUrl+`op_tablist?compCode=`+compCode);
+    const url = `${this.apiUrl}op_tablist?compCode=${compCode}`;
+    return this.http.get<TabsResult[]>(url, { headers }).pipe(
+      catchError((error) => this.handleTokenError(error, () => this.getTabs()))
+    );
   }
 
   getDealer(account_number: string, orgID: string): Observable<Dealer[]> {
     const headers = this.tokenGenerated();
-    return this.http.get<Dealer[]>(this.apiUrl+`op_dealer?acctNum=`+account_number+`&orgID=`+orgID);
+    const url = `${this.apiUrl}op_dealer?acctNum=${account_number}&orgID=${orgID}`;
+    return this.http.get<Dealer[]>(url, { headers }).pipe(
+      catchError((error) => this.handleTokenError(error, () => this.getDealer(account_number, orgID)))
+    );
   }
 
-  getLoadOrder(orderID: number): Observable<any>{
+  getLoadOrder(orderID: number): Observable<any> {
     const headers = this.tokenGenerated();
     const compCode = this.accountService.getCompCode();
-    return this.http.get<any>(this.apiUrl+`op_load_order?orderID=`+orderID+`&compCode=`+compCode);
+    const url = `${this.apiUrl}op_load_order?orderID=${orderID}&compCode=${compCode}`;
+    return this.http.get<any>(url, { headers }).pipe(
+      catchError((error) => this.handleTokenError(error, () => this.getLoadOrder(orderID)))
+    );
   }
 
   deleteTemplate(id: number): Observable<Templates[]> {
-    const httpOptions = {
-      headers: new HttpHeaders().set('Content-Type', 'application/json')
-    };
+    const headers = this.tokenGenerated(); // Assuming tokenGenerated() returns the authorization header
+    const url = `${this.apiUrl}op_delete_template`;
     const body = { orderID: id }; // Define the payload for the POST request
-    return this.http.post<Templates[]>(`${this.apiUrl}op_delete_template`, body, httpOptions);
-  }
   
-  getOrderPortalProductAPI(tab_ids: string, stn_arr: string): Observable<OrderProductList[]>{
+    return this.http.post<Templates[]>(url, body, { headers }).pipe(
+      catchError((error) => this.handleTokenError(error, () => this.deleteTemplate(id)))
+    );
+  }  
+  
+  getOrderPortalProductAPI(tab_ids: string, stn_arr: string): Observable<OrderProductList[]> {
     this.account_number = this.accountService.getOrderPortalAccountNumber(); // Get the acct parameter
     const headers = this.tokenGenerated();
     const compCode = this.accountService.getCompCode();
-    let new_stn_arr = encodeURIComponent(stn_arr);
-    return this.http.get<OrderProductList[]>(this.apiUrl+`op_products?tid=`+tab_ids+`&stns=`+new_stn_arr+`&compCode=`+compCode+`&acctNum=`+this.account_number);
-  }
+    const new_stn_arr = encodeURIComponent(stn_arr);
+  
+    const url = `${this.apiUrl}op_products?tid=${tab_ids}&stns=${new_stn_arr}&compCode=${compCode}&acctNum=${this.account_number}`;
+    
+    return this.http.get<OrderProductList[]>(url, { headers }).pipe(
+      catchError((error) => this.handleTokenError(error, () => this.getOrderPortalProductAPI(tab_ids, stn_arr)))
+    );
+  }  
 
   saveOrder(formData: any): Observable<any[]> {
     const headers = this.tokenGenerated();
-    return this.http.post<any[]>(`${this.apiUrl}op_saveorder`, formData);
-  }
+    const url = `${this.apiUrl}op_saveorder`;
+    return this.http.post<any[]>(url, formData, { headers }).pipe(
+      catchError((error) => this.handleTokenError(error, () => this.saveOrder(formData)))
+    );
+  }  
 
   generatePDF(formData: any): Observable<Blob> {
     const headers = this.tokenGenerated();
     const url = `${this.apiUrl}op_generatePdf`;
-    return this.http.post(url, formData, { responseType: 'blob' });
-  }
+    return this.http.post<Blob>(url, formData, { headers, responseType: 'blob' as 'json' }).pipe(
+      catchError((error) => this.handleTokenError(error, () => this.generatePDF(formData)))
+    );
+  }  
 
   getOrderPortalAPI(aid: string): Observable<any[]>{
     return this.http.get<any[]>(this.CRMURL + `order_portal_api?aid=`+aid);
@@ -152,38 +205,57 @@ export class MasterService {
     this.isDifferentContentVisibleSubject.next(isVisible);
   }
 
-  getWareHouseDateList(): Observable<any>{
-    return this.http.get<any>(this.apiUrl+`pp_warehouse_datelist`);
-  }
-
-  getAgentEmail(): Observable<any>{
-    const compCode = this.accountService.getCompCode();
-    this.acct = this.accountService.getAccount(); // Get the acct parameter
-    return this.http.get<any>(this.apiUrl+`pp_agent_email?compCode=`+compCode+`&acctNum=`+ this.acct);
-  }
-
-  getPartsCategories(): Observable<Category[]>{
+  getWareHouseDateList(): Observable<any> {
     const headers = this.tokenGenerated();
-    const compCode = this.accountService.getCompCode();
-    return this.http.get<Category[]>(this.apiUrl+`pp_categories?compCode=`+compCode);
-  }
-
-  getProductCategory(catID: string, history: string, percentage: number, addItem?: number): Observable<PartProducts[]>{
-    const headers = this.tokenGenerated();
-    this.acct = this.accountService.getAccount(); // Get the acct parameter
-    const compCode = this.accountService.getCompCode();
-    // Default addItem to 0 if it's null, undefined, or falsy
-    const itemToAdd = addItem ?? 0;
-    return this.http.get<PartProducts[]>(this.apiUrl+`pp_product_category?compCode=`+compCode+`&history=`+history+`&percentage=`+percentage+`&acctNum=`+ this.acct +`&catID=`+catID+`&addItem=` + itemToAdd).pipe(
-      catchError(this.handleError)
+    // Use template literals for URL construction and add error handling with `pipe()` and `catchError()`
+    return this.http.get<any>(`${this.apiUrl}pp_warehouse_datelist`, { headers }).pipe(
+      catchError((error) => this.handleTokenError(error, () => this.getWareHouseDateList()))
     );
   }
 
-  getaddItemSearch(sku: string): Observable<AddNewItem[]>{
+  getAgentEmail(): Observable<any> { 
+    const compCode = this.accountService.getCompCode();
+    this.acct = this.accountService.getAccount(); // Get the acct parameter
+    const encryptedTestValue = this.encryptionService.encrypt(this.acct || '');
+    console.log('Encrypted Test Value:', encryptedTestValue);
+
+    const decryptedTestValue = this.encryptionService.decrypt(encryptedTestValue);
+    console.log('Decrypted Test Value:', decryptedTestValue);
+    const headers = this.tokenGenerated();
+    // Use template literals for URL and add error handling with `pipe()` and `catchError()`
+    return this.http.get<any>(`${this.apiUrl}pp_agent_email?compCode=${compCode}&acctNum=${this.acct}`, { headers }).pipe(
+      catchError((error) => this.handleTokenError(error, () => this.getAgentEmail()))
+    );
+  }
+
+  getPartsCategories(): Observable<Category[]> {
+    const headers = this.tokenGenerated();
+    const compCode = this.accountService.getCompCode();
+    return this.http.get<Category[]>(`${this.apiUrl}pp_categories?compCode=${compCode}`, { headers }).pipe(
+      catchError((error) => this.handleTokenError(error, () => this.getPartsCategories()))
+    );
+  }
+
+  getProductCategory(catID: string, history: string, percentage: number, addItem?: number, loadR12: boolean = false): Observable<PartProducts[]> {
     const headers = this.tokenGenerated();
     this.acct = this.accountService.getAccount(); // Get the acct parameter
     const compCode = this.accountService.getCompCode();
-    return this.http.get<AddNewItem[]>(this.apiUrl+`pp_addNewItem?compCode=`+compCode+`&acctNum=`+ this.acct +`&prodSKU=`+sku);
+    const itemToAdd = addItem ?? 0;
+    const loadR12Flag = loadR12 ? 1 : 0;
+
+    return this.http.get<PartProducts[]>(`${this.apiUrl}pp_product_category?compCode=${compCode}&history=${history}&percentage=${percentage}&acctNum=${this.acct}&catID=${catID}&addItem=${itemToAdd}&loadR12=${loadR12Flag}`, { headers }).pipe(
+      catchError((error) => this.handleTokenError(error, () => this.getProductCategory(catID, history, percentage, itemToAdd)))
+    );
+  }
+
+  getaddItemSearch(sku: string): Observable<AddNewItem[]> { 
+    this.acct = this.accountService.getAccount(); // Get the acct parameter
+    const compCode = this.accountService.getCompCode();
+    const headers = this.tokenGenerated();
+    // Use template literals for URL construction and add error handling with `pipe()` and `catchError()`
+    return this.http.get<AddNewItem[]>(`${this.apiUrl}pp_addNewItem?compCode=${compCode}&acctNum=${this.acct}&prodSKU=${sku}`, { headers }).pipe(
+      catchError((error) => this.handleTokenError(error, () => this.getaddItemSearch(sku)))
+    );
   }
 
   updateOrder(qty: string, sku: string, price: number): Observable<any>{
@@ -196,15 +268,22 @@ export class MasterService {
     formData.append('acctNum', this.acct || '');
     formData.append('qty', qty);
     formData.append('price', price.toString()); // Convert price to string
-    return this.http.post<any>(this.apiUrl+`pp_update_parts_order`, formData);
+
+    return this.http.post<any>(`${this.apiUrl}pp_update_parts_order`, formData, { headers }).pipe(
+      catchError((error) => this.handleTokenError(error, () => this.updateOrder(qty, sku, price)))
+    );
   }
 
-  getClearOrder(){
+  getClearOrder(): Observable<AddNewItem[]> {
     const headers = this.tokenGenerated();
     this.acct = this.accountService.getAccount(); // Get the acct parameter
     const compCode = this.accountService.getCompCode();
-    return this.http.get<AddNewItem[]>(this.apiUrl+`pp_clear_order?compCode=`+compCode+`&acctNum=`+ this.acct);
-  }
+    
+    // Define return type as Observable<AddNewItem[]>
+    return this.http.get<AddNewItem[]>(`${this.apiUrl}pp_clear_order?compCode=${compCode}&acctNum=${this.acct}`, { headers }).pipe(
+      catchError((error) => this.handleTokenError(error, () => this.getClearOrder()))
+    );
+  }    
 
   importOrder(file: File): Observable<any> {
     this.acct = this.accountService.getAccount(); // Get the acct parameter
@@ -213,16 +292,17 @@ export class MasterService {
     formData.append('excel_file', file, file.name);
     formData.append('acctNum', this.acct || '54321'); // Use the account number or fallback to '54321'
     formData.append('compCode', compCode || 'USF');
-    const token = localStorage.getItem('loginToken');
-    const headers = new HttpHeaders({
-      //'Authorization': `Bearer ${token || ''}`,
-      'Accept': 'application/json'
-    });
-
-    return this.http.post(`${this.apiUrl}pp_import_order`, formData);
+    const headers = this.tokenGenerated();
+    // const headers = new HttpHeaders({
+    //   'Authorization': `Bearer ${token || ''}`,
+    //   'Accept': 'application/json'
+    // });
+    return this.http.post(`${this.apiUrl}pp_import_order`, formData, { headers }).pipe(
+      catchError((error) => this.handleTokenError(error, () => this.importOrder(file)))
+    );
   }
 
-  submitOrder(shipWeekDate: string, numericValue: number){
+  submitOrder(shipWeekDate: string, numericValue: number): Observable<any> {
     this.acct = this.accountService.getAccount(); // Get the acct parameter
     let compCode = this.accountService.getCompCode();
     let agentEmail = this.accountService.getAgentEmail();
@@ -236,8 +316,57 @@ export class MasterService {
     // Ensure numericValue is passed as a string and is not NaN
     formData.append('totalValue', !isNaN(numericValue) ? numericValue.toString() : '0');
     const headers = this.tokenGenerated();
-    return this.http.post<any>(this.apiUrl+`pp_submit_order`, formData);
+
+    // Using catchError to handle token errors and retry the request
+    return this.http.post<any>(`${this.apiUrl}pp_submit_order`, formData, { headers }).pipe(
+      catchError((error) => this.handleTokenError(error, () => this.submitOrder(shipWeekDate, numericValue)))
+    );
   }
+
+  getR12History(): Observable<any> {
+    const headers = this.tokenGenerated();
+    const acct = this.accountService.getAccount(); // Use local variable
+    const compCode = this.accountService.getCompCode();
+  
+    const url = `${this.apiUrl}pp_load_history?compCode=${compCode}&acctNum=${acct}`;
+  
+    return this.http.get<PartProducts[]>(url, { headers }).pipe(
+      catchError((error) => this.handleTokenError(error, () => this.getLoadHistory()))
+    );
+  }
+
+  getLoadHistory(): Observable<PartProducts[]> {
+    const headers = this.tokenGenerated();
+    const acct = this.accountService.getAccount(); // Use local variable
+    const compCode = this.accountService.getCompCode();
+  
+    const url = `${this.apiUrl}pp_load_history?compCode=${compCode}&acctNum=${acct}`;
+  
+    return this.http.get<PartProducts[]>(url, { headers }).pipe(
+      catchError((error) => this.handleTokenError(error, () => this.getLoadHistory()))
+    );
+  }
+  
+  updateBulkOrderQty(orders: any[]): Observable<any> {
+    const headers = this.tokenGenerated(); // Do not set Content-Type manually
+    const acctNum = this.accountService.getAccount(); // Assuming method returns acctNum
+    const compCode = this.accountService.getCompCode();
+  
+    const formData = new FormData();
+    formData.append('orders', JSON.stringify(orders)); // Convert orders array to JSON
+    formData.append('acctNum', acctNum ?? '');
+    formData.append('compCode', compCode);
+  
+    return this.http.post<any>(
+      `${this.apiUrl}pp_suggest_bulk_order_update`,
+      formData,
+      { headers }
+    ).pipe(
+      catchError(error =>
+        this.handleTokenError(error, () => this.updateBulkOrderQty(orders))
+      )
+    );
+  }     
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'Unknown error!';

@@ -1,0 +1,84 @@
+$small:300px;
+$medium:900px;
+
+.submitted-message {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.grayed-out {
+    background-color: lightgray;
+    cursor: not-allowed; /* Optional: to show that the input is disabled */
+    opacity: 0.6; /* Optional: to give a disabled look */
+}
+.inner-container{
+    @media screen and (max-width:$medium) {
+       flex-wrap: wrap;
+    }
+  & .right-block{
+    @media screen and (max-width:$medium) {
+        flex-wrap: wrap;
+        // gap:10px;
+     }
+     & .btn-grp{
+        @media screen and (max-width:$medium) {
+           margin: 0px 0;
+         } 
+     }
+  }
+ 
+}
+.right-block.filter-wrapper{
+    & .btn-grp{
+        & .btn__pl-wicon{
+            @media screen and (max-width:$medium) {
+                margin: 8px 0;
+              } 
+        }
+      
+     }
+}
+
+.inner-container__title .left-block{
+    @media screen and (max-width:$medium) {
+       padding-bottom: 10px;
+        flex: 1 0 100%;
+    }
+
+}
+.pg-outer-container, .content-container{
+    @media screen and (max-width:$medium) {
+      
+        padding: 16px;
+    }
+}
+
+.mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix{
+    @media screen and (max-width:$medium) {
+        width: 50px;
+        background-color: aqua;
+}
+}
+.level-outer{
+    @media screen and (max-width:$medium) {
+        overflow-x: auto;
+      }
+}
+.table-wrapper{
+    width: 100%;
+    @media screen and (max-width:$medium) {
+       overflow-x: auto;
+     }
+}
+.filter-wrapper{
+    @media screen and (max-width:$medium) {
+        padding-top: 0;
+      }
+
+}
+.navbar-toggler{
+    @media screen and (max-width:$medium) {
+        display: none;
+      }
+}

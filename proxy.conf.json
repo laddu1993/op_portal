@@ -1,0 +1,10 @@
+{
+  "/api": {
+    "target": "https://crmapps.husqvarnagroup.com/uat_op_portal",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}

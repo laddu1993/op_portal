@@ -9,6 +9,6 @@ import { environment } from 'src/environments/environment';
 export class NotFoundComponent {
   assetUrl = environment.assetUrl;
   envName = environment.name;
-  isUATMode: boolean = environment.uat;
+  isUATMode: boolean = environment.production;
 
 }

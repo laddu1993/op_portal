@@ -137,8 +137,9 @@
               <input #searchOrderInput matInput placeholder="Search" (input)="applyFilter($event)">
               <img [src]="assetUrl + 'search-icon.svg'" alt="">
             </mat-form-field>
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="more-options" class="margin-top-vl">
-              <mat-icon>more_vert</mat-icon>
+            <button [matMenuTriggerFor]="menu" type="button" class="menu-button">
+              <!-- <mat-icon>more_vert</mat-icon> -->
+              <img [src]="assetUrl + 'dot-icon.svg'" class="bt-icon" alt="Menu">
             </button>
             <mat-menu #menu="matMenu">
               <button mat-menu-item (click)="generatePDF()">

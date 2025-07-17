@@ -1,0 +1,319 @@
+<!-- ORDER DETAILS TAB -->
+<div class="row gx-5">
+  <div class="col-2">
+    <div class="inner-container inner-container__title-wo-border">
+      <h1>Products</h1>
+    </div>
+    <div class="Exp-panel-sm product-acc-outer vlmainproduct" [formGroup]="tabForm">
+      <mat-accordion>
+        <mat-expansion-panel (expandedChange)="onPanelChange($event, item)" *ngFor="let item of tablist; let i = index">
+          <mat-expansion-panel-header>
+            <mat-panel-title [attr.id]="item.id">
+              {{ item.name }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-form-field appearance="outline" class="searchip vl-search" subscriptSizing="dynamic" *ngIf="i > 0">
+            <input #searchInput matInput placeholder="Search" (input)="onSearch($event)">
+            <img [src]="assetUrl + 'search-icon.svg'" alt="">
+          </mat-form-field>
+          <!-- Master Checkbox for Select All -->
+          <div class="spacer-12"></div>
+          <div class="all-checkbx">
+             <mat-checkbox *ngIf="i > 0" (change)="selectAll(item.id, $event.checked, item.subtabs)" [ngClass]="['maintab','testvl']" [checked]="true">Select All</mat-checkbox>
+            <div class="Product-list">
+            <!-- Individual Checkboxes -->
+            <mat-checkbox *ngFor="let tab of getFilteredSubtabs(item.subtabs)"
+              [id]="tab" 
+              (change)="onCheckboxChange($event, item.id)" 
+              [ngClass]="['testvl', 'vlchecbox' + item.id]" 
+              [checked]="isChecked(tab)">
+              {{ tab }}
+            </mat-checkbox>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+<div class="col-10">
+  <div class="Exp-panel-big">
+    <mat-expansion-panel #orderSummaryPanel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Order Summary
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+        <table mat-table [dataSource]="orderSummarySource" class="mat-elevation-z8 summary-table">
+          <button mat-flat-button color="primary">Primary</button>
+          <!-- shipment -->
+          <ng-container matColumnDef="shipment">
+              <th mat-header-cell *matHeaderCellDef style="width: 100px;"> Shipment </th>
+              <td mat-cell *matCellDef="let element"> {{element.shipment}} </td>
+          </ng-container>
+          <!-- total -->
+          <ng-container matColumnDef="total">
+            <th mat-header-cell *matHeaderCellDef style="width: 100px;"> </th>
+            <td mat-cell *matCellDef="let element"> {{element.total}} </td>
+          </ng-container>
+          <!-- s1 Column -->
+          <ng-container matColumnDef="s1" *ngIf="!showAccountInfo">
+              <th mat-header-cell *matHeaderCellDef style="width: 100px;"> 
+                <mat-form-field appearance="fill" style="width: 130px !important;">
+                  <!-- <mat-label>Choose a date</mat-label> -->
+                  <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDateS1" [min]="S1minDate" readonly>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.s1 }}
+              </td>            
+          </ng-container>
+
+          <!-- s2 Column -->
+          <ng-container matColumnDef="s2" *ngIf="!showAccountInfo">
+              <th mat-header-cell *matHeaderCellDef style="width: 100px;">
+                <mat-form-field appearance="fill" style="width: 130px !important;">
+                  <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDateS2" [min]="S2minDate" readonly>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.s2 }}
+              </td>
+          </ng-container>
+
+          <!-- s3 Column -->
+          <ng-container matColumnDef="s3" *ngIf="!showAccountInfo">
+              <th mat-header-cell *matHeaderCellDef style="width: 100px;">
+                <mat-form-field appearance="fill" style="width: 130px !important;">
+                  <!-- <mat-label>Choose a date</mat-label> -->
+                  <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDateS3" [min]="S3minDate" readonly>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.s3 }}
+              </td>
+          </ng-container>
+
+          <!-- d1 Column -->
+          <ng-container matColumnDef="d1" *ngIf="showAccountInfo">
+              <th mat-header-cell *matHeaderCellDef>  </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.d1 === 'D1' ? 'S1' : element.d1 }}
+              </td>
+          </ng-container>
+
+          <!-- d2 Column -->
+          <ng-container matColumnDef="d2" *ngIf="showAccountInfo">
+              <th mat-header-cell *matHeaderCellDef>  </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.d2 === 'D2' ? 'S2' : element.d2 }}
+              </td>
+          </ng-container>
+
+          <!-- d3 Column -->
+          <ng-container matColumnDef="d3" *ngIf="showAccountInfo">
+              <th mat-header-cell *matHeaderCellDef>  </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.d3 === 'D3' ? 'S3' : element.d3 }}
+              </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedOrderSummaryColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedOrderSummaryColumns;"></tr>
+        </table>
+    </mat-expansion-panel>
+</div>
+    <div class="inner-container inner-container__title-wo-border">
+        <div class="left-block">
+          <h1>Order Details</h1>
+          <p><br />Note: The <span style="background-color: #9fe2bf;">highlighted</span> SKUs will not be launched until next year</p>
+        </div>      
+        <div class="right-block">
+            <mat-form-field appearance="outline" class="searchip">
+              <input #searchOrderInput matInput placeholder="Search" (input)="applyFilter($event)">
+              <img [src]="assetUrl + 'search-icon.svg'" alt="">
+            </mat-form-field>
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="more-options" class="margin-top-vl">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="generatePDF()">
+                <img [src]="assetUrl + 'download-pdf-icon.svg'" alt="Download PDF">
+                <span>Download PDF</span>
+              </button>
+              <button mat-menu-item (click)="openAddTemplatePopup()">
+                <img [src]="assetUrl + 'add-to-templates-icon.svg'" alt="Create Template">
+                <span>Create Template</span>
+              </button>
+              <button mat-menu-item *ngIf="isTemplateCreated" (click)="saveTemplate()">
+                <img [src]="assetUrl + 'save-template-icon.svg'" alt="Save Template">
+                <span>Save Template</span>
+              </button>
+              <button mat-menu-item (click)="openTemplatePopup()">
+                <img [src]="assetUrl + 'load-template-icon.svg'" alt="Load Template">
+                <span>Load Template</span>
+              </button>
+            </mat-menu>
+        </div>
+    </div>
+  <app-progress-bar></app-progress-bar>
+  <div class="table-container" *ngIf="!isLoading" [ngStyle]="noRecords ? {'overflow': 'auto'} : {'height': '400px', 'overflow': 'auto'}">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8 vl-dealertable">
+        <button mat-flat-button color="primary">Primary</button>
+          <!-- sku -->
+          <ng-container matColumnDef="sku">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> SKU </th>
+            <td mat-cell *matCellDef="let element"> {{element.sku}} </td>
+          </ng-container>
+        
+          <!-- model Column -->
+          <ng-container matColumnDef="model">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Model </th>
+            <td mat-cell *matCellDef="let element"> {{element.model}} </td>
+          </ng-container>
+        
+          <!-- description Column -->
+          <ng-container matColumnDef="desc">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="fixed-width"> Description </th>
+            <td mat-cell *matCellDef="let element" class="fixed-width" [ngClass]="{'highlight-row': element.color_code !== '-1'}">
+              <span class="desc">{{element.desc}}</span>
+              <br>
+              <span *ngIf="element.nab_date" class="nab-date">NAB {{element.nab_date}}</span>
+            </td>
+          </ng-container>                   
+        
+          <!-- history Column -->
+          <ng-container matColumnDef="history">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> R12 </th>
+            <td mat-cell *matCellDef="let element"> 
+              {{ element.history ? element.history : '' }} 
+            </td>
+          </ng-container>
+
+          <!-- history Column -->
+          <ng-container matColumnDef="last_year">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> LY </th>
+            <td mat-cell *matCellDef="let element"> 
+              {{ element.last_year ? element.last_year : '' }} 
+            </td>
+          </ng-container>
+          <!-- s1 Column -->
+          <!-- <ng-container matColumnDef="s1">
+              <th mat-header-cell *matHeaderCellDef> S1 </th>
+              <td mat-cell *matCellDef="let element"> {{element.s1}} </td>
+            </ng-container> -->
+           <!-- Define columns -->
+          <!-- Dynamic Input Columns -->
+          <ng-container matColumnDef="s1" *ngIf="!showAccountInfo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> S1 </th>
+            <td mat-cell *matCellDef="let element">
+              <input matInput (keyup)="onInputChange($event, element, element.sku, 's1', element.cost, element.msrp, element.model, element.desc, element.ayp, element.ext)" value="{{element.s1}}" style="width: 50px;" pattern="[0-9]*"
+              (keypress)="validateNumber($event)">
+            </td>
+          </ng-container>
+      
+          <!-- s2 Column -->
+          <ng-container matColumnDef="s2" *ngIf="!showAccountInfo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> S2 </th>
+            <td mat-cell *matCellDef="let element">
+              <input matInput (keyup)="onInputChange($event, element, element.sku, 's2', element.cost, element.msrp, element.model, element.desc, element.ayp, element.ext)" value="{{element.s2}}" style="width: 50px;" pattern="[0-9]*"
+              (keypress)="validateNumber($event)">
+            </td>
+          </ng-container>
+          
+          <!-- s3 Column -->
+          <ng-container matColumnDef="s3" *ngIf="!showAccountInfo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> S3 </th>
+            <td mat-cell *matCellDef="let element">
+              <input matInput (keyup)="onInputChange($event, element, element.sku, 's3', element.cost, element.msrp, element.model, element.desc, element.ayp, element.ext)" value="{{element.s3}}" style="width: 50px;" pattern="[0-9]*"
+              (keypress)="validateNumber($event)">
+            </td>
+          </ng-container>
+            
+          <!-- pna Column -->
+          <!-- <ng-container matColumnDef="pna">
+            <th mat-header-cell *matHeaderCellDef> P&A </th>
+            <td mat-cell *matCellDef="let element">
+              <input matInput placeholder="P&A" value="{{element.pna}}" style="width: 50px;">
+            </td>
+          </ng-container>    -->
+          
+          <!-- d1 Column -->
+          <ng-container matColumnDef="d1" *ngIf="showAccountInfo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> S1 </th>
+            <td mat-cell *matCellDef="let element">
+              <input matInput (keyup)="onInputChange($event, element, element.sku, 'd1', element.cost, element.msrp, element.model, element.desc, element.ayp, element.ext)" value="{{element.d1}}" style="width: 50px;" pattern="[0-9]*"
+              (keypress)="validateNumber($event)">
+            </td>
+          </ng-container>
+
+          <!-- d2 Column -->
+          <ng-container matColumnDef="d2" *ngIf="showAccountInfo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> S2 </th>
+            <td mat-cell *matCellDef="let element">
+              <input matInput (keyup)="onInputChange($event, element, element.sku, 'd2', element.cost, element.msrp, element.model, element.desc, element.ayp, element.ext)" value="{{element.d2}}" style="width: 50px;" pattern="[0-9]*"
+              (keypress)="validateNumber($event)">
+            </td>
+          </ng-container>
+
+          <!-- d3 Column -->
+          <ng-container matColumnDef="d3" *ngIf="showAccountInfo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> S3 </th>
+            <td mat-cell *matCellDef="let element">
+              <input matInput (keyup)="onInputChange($event, element, element.sku, 'd3', element.cost, element.msrp, element.model, element.desc, element.ayp, element.ext)" value="{{element.d3}}" style="width: 50px;" pattern="[0-9]*"
+              (keypress)="validateNumber($event)">
+            </td>
+          </ng-container>
+
+          <!-- msrp Column -->
+          <ng-container matColumnDef="msrp">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="fixed-width-common"> MSRP </th>
+            <td mat-cell *matCellDef="let element" class="fixed-width-common"> {{ element.msrp | currency:'USD':'symbol' }} </td>
+          </ng-container>          
+
+          <!-- cost Column -->
+          <ng-container matColumnDef="cost">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="fixed-width-common"> Cost </th>
+            <td mat-cell *matCellDef="let element" class="fixed-width-common"> {{ element.cost | currency:'USD':'symbol' }} </td>
+          </ng-container>  
+          
+          <!-- ayp Column -->
+          <ng-container matColumnDef="ayp">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="fixed-width-common"> AYP </th>
+            <td mat-cell *matCellDef="let element" class="fixed-width-common"> {{ element.ayp | currency:'USD':'symbol' }} </td>
+          </ng-container>
+          
+          <!-- ext Column -->
+          <ng-container matColumnDef="ext">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Ext </th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.ext ? element.ext : '$0.00' }} 
+            </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <app-skeleton-loader [rowCount]="12"></app-skeleton-loader>
+  </div>
+  <div *ngIf="noRecords" class="no-records-message">
+    <img [src]="assetUrl + 'no-data-icon.svg'" alt="">
+    <h3>No records found</h3>
+  </div>
+  <mat-paginator [length]="100"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Select page">
+  </mat-paginator>
+</div>
+</div>
+
+
+
+
+
+

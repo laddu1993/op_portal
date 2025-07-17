@@ -5,7 +5,11 @@
   "projects": {
     "order-portal-project": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -81,6 +85,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "browserTarget": "order-portal-project:build:production"
@@ -122,6 +129,6 @@
     }
   },
   "cli": {
-    "analytics": "fd49dbcc-c66d-478b-ad37-23debecba820"
+    "analytics": false
   }
 }

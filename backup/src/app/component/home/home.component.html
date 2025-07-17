@@ -1,0 +1,45 @@
+<!-- header -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+     <a class="navbar-brand"><img [src]="assetUrl + 'logo.svg'" alt=""> &nbsp;<b *ngIf="isUATMode" style="color: #273a60;">{{envName}}</b></a>
+      <!-- <div class="tab-header" *ngIf="isShown">
+         <a href="javascript:void(0)" (click)="selectCustomerInfoTab()">
+            <img [src]="assetUrl + 'home.jpg'" class="home-icon" alt="Home">
+         </a>
+      </div> -->
+     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+     </button>
+     <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+           <li class="nav-item">
+              <a class="nav-link active" aria-current="page" [routerLink]="['/home']" [queryParams]="{ aid: '615' }">Order</a>
+           </li>
+           <li class="nav-item">
+              <a class="nav-link" aria-current="page" [routerLink]="['/parts']" [queryParams]="{ acct: '54321' }">Parts</a>
+           </li>
+        </ul>
+     </div> -->
+  </div>
+</nav>
+<!-- end of header -->
+<div class="pg-outer-container">
+  <div class="content-container">
+      <div class="btn-grp absolute-right">
+        <!-- <button type="button" class="btn btn__secondary" (click)="downloadPDF()">Download PDF</button> -->
+        <button type="button" class="btn btn__primary" (click)="submitOrder()" [disabled]="isSubmitting" *ngIf="!isDefault">Submit</button>
+      </div>
+      <mat-tab-group #tabGroup mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms" dynamicHeight>
+         <mat-tab label="Customer Information">
+            <app-customer-info></app-customer-info>
+         </mat-tab>
+         <mat-tab label="Order Details" [disabled]="orderDetailsDisabled">
+            <app-dealer-info *ngIf="!orderDetailsDisabled"></app-dealer-info>
+         </mat-tab>
+         <mat-tab label="Program Information" [disabled]="orderDetailsDisabled">
+            <app-program-information *ngIf="!orderDetailsDisabled">Program Information</app-program-information>
+         </mat-tab>
+      </mat-tab-group>
+    
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<!-- SUGGEST POPUP -->
+<div class="inner-container inner-container__title-wo-border">
+    <div class="left-block">
+       <h1>Output Message!</h1>
+    </div>
+ </div>
+ <div class="popup-content popup-content__small row gy-4 gx-3">
+    <div class="col-12">
+       <div class="form-field-wrap">
+          {{data.message.message}}
+       </div>
+    </div>
+    <div class="col-12 d-flex justify-content-end">
+       <div class="btn-grp">
+          <button type="button" class="btn btn__secondary" (click)="closePopup()">Close</button>
+       </div>
+    </div>
+ </div>

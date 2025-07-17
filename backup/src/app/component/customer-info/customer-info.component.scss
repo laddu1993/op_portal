@@ -1,0 +1,24 @@
+.vlcustom{
+    width: 205px;
+    height: 42px;
+    font-size: .9rem;
+    padding: 5px;   
+}
+
+.detail-inner .vlcustom {
+    border-color: #9e9e9e;
+}
+
+.button-container {
+    display: flex;          /* Use flexbox for horizontal layout */
+    gap: 10px;              /* Optional: adds spacing between buttons */
+}
+
+.btn {
+    display: flex;          /* Ensure the button contents align properly */
+    align-items: center;    /* Vertically center align the contents */
+}
+
+.bt-icon {
+    margin-right: 5px;      /* Optional: adds spacing between icon and text */
+}

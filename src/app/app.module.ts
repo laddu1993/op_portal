@@ -55,6 +55,10 @@ import { ProgressBarComponent } from './component/progress-bar/progress-bar.comp
 import { NotFoundComponent } from './component/not-found/not-found.component';
 import { IsMaintenanceComponent } from './is-maintenance/is-maintenance.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ContactAdminComponent } from './component/contact-admin/contact-admin.component';
+import { UnauthorizedComponent } from './component/unauthorized/unauthorized.component';
+import { LoadHistoryComponent } from './component/partsportal/load-history/load-history.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -87,7 +91,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     SkeletonLoaderComponent,
     ProgressBarComponent,
     NotFoundComponent,
-    IsMaintenanceComponent
+    IsMaintenanceComponent,
+    ContactAdminComponent,
+    UnauthorizedComponent,
+    LoadHistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -115,7 +122,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatDatepickerModule,
     MatNativeDateModule,
     AgGridAngular,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -95,3 +95,25 @@
     font-weight: bold; /* Make the nab_date bold */
     background-color: #fff8e1; /* Light background for nab_date */
 }
+
+.menu-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    
+    /* Optimized padding */
+    padding: 8px 22px 30px 8px !important; 
+}
+
+.menu-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain; /* Ensures proper scaling */
+}

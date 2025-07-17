@@ -11,13 +11,32 @@
 </div> -->
 <nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
-    <a class="navbar-brand"><img [src]="assetUrl + 'logo.svg'" alt=""> &nbsp;<b *ngIf="isUATMode" style="color: #273a60;">{{envName}}</b></a>
+    <a class="navbar-brand"><img [src]="assetUrl + 'logo.svg'" alt=""> &nbsp;<b *ngIf="!isUATMode" style="color: #273a60;">{{envName}}</b></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div>
-      <b>Account Name: {{accountName}}</b><br>
-      <b>Account Number: {{accountNum}}</b><br>
+      <b *ngIf="isPageReady">Account Name: {{accountName}}</b><br>
+      <b *ngIf="isPageReady">Account Number: {{accountNum}}</b><br>
+      <b *ngIf="compCode === 'USF' && isPageReady">P&A Bracket: 
+        <span>
+          {{ PNADiscount === 6 ? 'SILVER' : (PNADiscount === 8 ? 'GOLD' : 'NA') }}
+        </span>
+      </b>
+      
+      <b *ngIf="compCode === 'CDA' && isPageReady">Certification Level: 
+        <span>
+          {{
+            PNADiscount === 0 ? 'SILVER' :
+            PNADiscount === 1 ? 'GOLD' :
+            PNADiscount === 2 ? 'PLATINUM' :
+            PNADiscount === 3 ? 'TITANIUM' :
+            PNADiscount === 5 ? 'CROWN' :
+            PNADiscount === 7 ? 'CROWN ELITE' :
+            'NA'
+          }}
+        </span>
+      </b>           
       <!-- <b>AYP Discount: {{cal_discount}}</b>  -->
     </div>
     &nbsp;&nbsp;&nbsp;&nbsp;
@@ -35,11 +54,27 @@
 </nav>
 <!-- end of header -->
 <app-progress-bar></app-progress-bar>
-<div class="pg-outer-container">
+
+<!-- <mat-tab-group
+#tabGroup
+mat-align-tabs="start"
+animationDuration="200ms"
+dynamicHeight
+(selectedTabChange)="onTabChange($event)"
+aria-label="Parts Dashboard Tabs">
+  <mat-tab label="Parts Dashboard"></mat-tab>
+  <mat-tab label="Load History">
+    <ng-template matTabContent>
+      <app-load-history></app-load-history>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group> -->
+
+<div class="pg-outer-container" *ngIf="isPageReady && selectedTabIndex === 0">
     <div class="content-container  content-container__top-zero-padding">
         <div class="inner-container inner-container__title filter-wrapper">
             <div class="left-block">
-              <h1>Parts  Dashboard</h1>
+              <h1>Parts Dashboard</h1>
             </div>
             <div class="right-block">
                 <!-- Show message when order is already submitted -->
@@ -47,12 +82,14 @@
                   Your order has already been submitted. To place another order, click the reload button to start again.
                 </p>                
                 <div class="btn-grp">
+                  <button type="button" class="btn btn__secondary" (click)="loadR12History()"
+                  matTooltip="Click to load past order data into the R12 column." [disabled]="isSaveDisabled"> Load R12 History </button>
                   <button type="button" class="btn btn__secondary" (click)="openClearconfirmation()" *ngIf="!isSaveDisabled && checkOrderValidity()">Clear</button>
                   <button type="button" class="btn btn__secondary" (click)="reloadPage()" *ngIf="isSaveDisabled">Reload</button>
                   <button type="button" class="btn btn__primary" (click)="openSubmitPopup()" [disabled]="isSaveDisabled" *ngIf="checkOrderValidity()">Submit</button>
                 </div>
-                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="more-options">
-                  <mat-icon>more_vert</mat-icon>
+                <button type="button" class="btn btn__pl-wicon" [matMenuTriggerFor]="menu">
+                  <img [src]="assetUrl + 'dot-icon.svg'" class="bt-icon" alt="Menu">
                 </button>
                 <mat-menu #menu="matMenu">
                   <button mat-menu-item (click)="openImportorder()">
@@ -87,7 +124,7 @@
           <div class="col">
             <div class="counterbox">
               <h1 id="msg_before_discount" #msg_before_discount>$0.00</h1>
-              <p>Before Discounts (AYP)</p>
+              <p>Dealer everyday price including AYP Discounts</p>
             </div>
           </div>
 
@@ -124,18 +161,18 @@
             <div class="level-box">
                 <mat-progress-bar id="silver_progress" mode="determinate" [value]="silver_progress"></mat-progress-bar>
                 <h3>TIER 2</h3>
-                <p>$5,000 - $9,999</p>
+                <p>$5,000 - $19,999</p>
             </div>
             <div class="level-box">
                 <mat-progress-bar mode="determinate" [value]="gold_progress"></mat-progress-bar>
                 <h3>TIER 3</h3>
-                <p>$10,000 - $24,999</p>
+                <p>$20,000+</p>
             </div>
-            <div class="level-box">
+            <!-- <div class="level-box">
                 <mat-progress-bar mode="determinate" [value]="gold_p_progress"></mat-progress-bar>
                 <h3>TIER 4</h3>
                 <p>$25,000+</p>
-            </div>
+            </div> -->
             <!-- <div class="level-box">
                 <mat-progress-bar mode="determinate" [value]="gold_pp_progress"></mat-progress-bar>
                 <h3>Gold++</h3>
@@ -258,7 +295,7 @@
             
               <!-- price Column -->
               <ng-container matColumnDef="price">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Dealer Base Price </th>
                 <td mat-cell *matCellDef="let element" id="price_{{ element.sku }}" [ngStyle]="{'background-color': element.blank === '-' ? '#FFEACA' : ''}"> ${{element.price}} </td>
               </ng-container>
             
@@ -300,7 +337,7 @@
             <app-skeleton-loader [rowCount]="7"></app-skeleton-loader>
           </div>
           <mat-paginator [length]="100"
-            [pageSize]="20"
+            [pageSize]="10"
             [pageSizeOptions]="[5, 10, 25, 100]"
             aria-label="Select page">
           </mat-paginator>

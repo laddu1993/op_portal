@@ -1,0 +1,38 @@
+<!-- CLEAR CONFIRMATION POPUP -->
+
+<div class="inner-container inner-container__title-wo-border">
+    <div class="left-block">
+        <h1>Submit Order</h1>
+    </div>
+    <div class="right-block">
+        <button (click)="closePopup()"><img [src]="assetUrl + 'close-icon.svg'" alt="Close PopUp"></button>
+    </div>
+</div>
+
+<div class="popup-content popup-content__small row gy-4">
+
+    <div class="col-12 vl-orderclass">
+        <h6>NOTE: The order total in this interface does not include all promotional offers and packaging discounts.</h6>
+        <h6>The final order total will be calculated after your sales representative transfers the order to Husqvarna Power.</h6>
+        <div class="spacer-12"></div>
+        <p>This will notify your sales representative that this order is ready to be placed. Your sales representative will then place the order for you.</p>
+        <div class="spacer-12"></div>
+        <b>Note: Once submitted - no changes can be made to the order</b>
+        <div class="spacer-12"></div>
+        <p>Ship the Week of</p>
+        <mat-form-field appearance="fill">
+            <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" [min]="minDate" [matDatepickerFilter]="dateFilter" readonly>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <div *ngIf="showError" class="error-message">Please select a date.</div>      
+    </div>
+    
+    <div class="col-12 d-flex justify-content-end">
+        <div class="btn-grp">
+            <button type="button" class="btn btn__secondary" (click)="closePopup()">Close</button>
+            <button type="button" class="btn btn__primary" (click)="submitOrder()" *ngIf="!isSubmitting">Submit</button>
+        </div>
+    </div>
+
+</div>

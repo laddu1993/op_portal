@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   isDefault = true;
   isSubmitting: boolean = false;  // Variable to track if order is being submitted
   envName = environment.name;
-  isUATMode: boolean = environment.uat;
+  isUATMode: boolean = environment.production;
 
   constructor(
     private titleService: Title,

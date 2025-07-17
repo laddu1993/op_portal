@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { EncryptionService } from './encryption.service';
 import { filter } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class AccountService {
   private aid: string | null = null;
   private encryptedAidParam: string | null = null;
   private encryptedAcctParam: string | null = null;
+  private oauth: string | null = null;
   private sltDealerId: string = ''; // Provide a default value
   private dataEmitter = new EventEmitter<any>();
   private showAccountInfoEmitter = new BehaviorSubject<any>(null);
@@ -39,6 +41,8 @@ export class AccountService {
   isSaveDisabled$ = this._isSaveDisabled.asObservable();
   private agentEmail: string | null = null;
   private parts_aid: number | null = null;
+  private ayp_discount: number | null = null;
+  private enableUrlEncryption: boolean = environment.enableUrlEncryption;
 
   constructor(private encryptionService: EncryptionService, private route: ActivatedRoute, private router: Router) {
     // Subscribe to router events to handle query parameters
@@ -46,22 +50,60 @@ export class AccountService {
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
       const snapshot = this.route.snapshot;
-      // this.encryptedAcctParam = snapshot.queryParamMap.get('acct');
-      // this.encryptedAidParam = snapshot.queryParamMap.get('aid');
+      this.encryptedAcctParam = snapshot.queryParamMap.get('acct');
+      this.encryptedAidParam  = snapshot.queryParamMap.get('aid');
+      this.oauth              = snapshot.queryParamMap.get('oauth');
 
-      // if (this.encryptedAidParam) {
-      //   this.aid = this.encryptionService.decrypt(this.encryptedAidParam);
-      //   console.log('URL parameter:', this.aid);
-      // }
-      // if (this.encryptedAcctParam) {
-      //   this.acct = this.encryptionService.decrypt(this.encryptedAcctParam);
-      //   console.log('URL Acct parameter:', this.acct);
-      // }
-      this.acct = snapshot.queryParamMap.get('acct');
-      this.aid = snapshot.queryParamMap.get('aid');
-      // Set compCode to 'USF' if it is not found in the URL
+      // Process account (acct) and aid parameters based on URL encryption settings and environment
+      if (this.enableUrlEncryption) {
+        if (this.oauth !== 'isDev') {
+          // Production mode: Attempt to decrypt parameters
+          if(this.encryptedAcctParam){
+            this.encryptedAcctParam = encodeURIComponent(this.encryptedAcctParam).replace(/%20/g, '%2B');
+            this.acct = this.decryptParameter(decodeURIComponent(this.encryptedAcctParam), 'AcctParam');
+            if (!this.acct) return; // Redirect handled in decryptParameter
+            console.log('Decrypted parameters for Acct:', { acct: this.acct });
+          }
+
+          if(this.encryptedAidParam){
+            this.aid = this.decryptParameter(this.encryptedAidParam, 'AidParam');
+            if (!this.aid) return; // Redirect handled in decryptParameter
+            console.log('Decrypted parameters for aid:', { aid: this.aid });
+          }
+          
+        } else {
+          // Development mode: Use encrypted values directly without decryption
+          this.acct = this.encryptedAcctParam;
+          this.aid = this.encryptedAidParam;
+          console.log('Development mode - using encrypted parameters directly:', { acct: this.acct, aid: this.aid });
+        }
+      } else {
+        // Fallback for non-encrypted values
+        this.acct = this.encryptedAcctParam || '';
+        this.aid = this.encryptedAidParam || '';
+        console.log('Fallback - using parameters as plain values:', { acct: this.acct, aid: this.aid });
+      }
+      // Set compCode with default fallback
       this.compCode = snapshot.queryParamMap.get('compCode') || 'USF';
+      
     });
+  }
+
+  /**
+   * Helper method to decrypt parameters and handle errors.
+   * @param param - Encrypted parameter to decrypt.
+   * @param paramName - Name of the parameter for error logging.
+   * @returns Decrypted value or redirects on failure.
+  */
+  private decryptParameter(param: string | null, paramName: string): string | null {
+    if (!param) return null;
+    const decrypted = this.encryptionService.decrypt(param);
+    if (!decrypted) {
+      console.error(`Decryption failed for ${paramName}, redirecting to unauthorized.`);
+      this.router.navigate(['unauthorized'], { replaceUrl: true });
+      return null;
+    }  
+    return decrypted;
   }
 
   disableSaveButton() {
@@ -224,9 +266,9 @@ export class AccountService {
     this.compCode = code;
   }
 
-  getCompCode(){
-    return this.compCode;
-  }
+  getCompCode() {
+    return this.compCode && this.compCode.trim() !== '' ? this.compCode : 'USF';
+  }  
 
   setTerritory(ter: Array<any>) {
     this.terList = ter;
@@ -251,6 +293,14 @@ export class AccountService {
 
   getPartsAgentID(){
     return this.parts_aid;
+  }
+
+  setPartsAYPDiscount(ayp_disc: number): void {
+    this.ayp_discount = ayp_disc;
+  }
+
+  getPartsAYPDiscount(){
+    return this.ayp_discount;
   }
 
 }
