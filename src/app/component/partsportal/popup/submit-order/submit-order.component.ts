@@ -48,9 +48,9 @@ export class SubmitOrderComponent {
   ngOnInit(): void {
     this.compCode = this.acctService.getCompCode();
     const today = new Date();
-    // Calculate minDate as 90 days from today
+    // Calculate minDate as 30 days from today
     this.minDate = new Date(today);
-    this.minDate.setDate(today.getDate() + 90);
+    this.minDate.setDate(today.getDate() + 30);
     if (this.compCode === 'CDA') {
       // If compCode is CDA, set the minDate to January 1st of next year
       // const nextYear = today.getFullYear() + 1;
