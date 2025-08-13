@@ -1,39 +1,41 @@
-const hostname = window.location.hostname;
+function getApiUrls(hostname: string) {
+  if (hostname === 'localhost') {
+    return {
+      uatApiBaseUrl: 'http://localhost/uat_op_portal/api/rest/v1.0/',
+      prodApiBaseUrl: 'http://localhost/op_portal/api/rest/v1.0/',
+      uatOpPortalApiBaseUrl: 'http://localhost/uat_op_portal/api/',
+      prodOpPortalApiBaseUrl: 'http://localhost/op_portal/api/',
+    };
+  }
 
-const getBaseUrls = (hostname: string) => {
-  const isLocal = hostname === 'localhost';
-  const isHusqvarna = hostname.includes('crmapps-tst.husqvarnagroup.com');
-
-  const base = isLocal
-    ? 'http://localhost'
-    : isHusqvarna
+  const base = hostname.includes('crmapps-tst') 
     ? 'https://crmapps-tst.husqvarnagroup.com'
-    : '';
+    : 'https://crmapps.husqvarnagroup.com';
 
   return {
     uatApiBaseUrl: `${base}/uat_op_portal/api/rest/v1.0/`,
-    uatOpPortalApiBaseUrl: `${base}/uat_op_portal/api/`,
     prodApiBaseUrl: `${base}/op_portal/api/rest/v1.0/`,
-    prodOpPortalApiBaseUrl: `${base}/op_portal/api/`
+    uatOpPortalApiBaseUrl: `${base}/uat_op_portal/api/`,
+    prodOpPortalApiBaseUrl: `${base}/op_portal/api/`,
   };
-};
+}
 
 const {
   uatApiBaseUrl,
-  uatOpPortalApiBaseUrl,
   prodApiBaseUrl,
+  uatOpPortalApiBaseUrl,
   prodOpPortalApiBaseUrl
-} = getBaseUrls(hostname);
+} = getApiUrls(window.location.hostname);
 
 export const environment = {
-  production: true,
+  production: false,
   enableUrlEncryption: true,
-  assetUrl: '/assets/', // Update this path based on your actual setup
+  assetUrl: '/assets/',
   name: '(UAT)',
   CRMURL: 'https://husqvarna.custhelp.com/cc/husqvarna_api/',
   uatApiBaseUrl,
-  uatOpPortalApiBaseUrl,
   prodApiBaseUrl,
+  uatOpPortalApiBaseUrl,
   prodOpPortalApiBaseUrl,
   tokenGenerationEnabled: false
 };
