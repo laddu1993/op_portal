@@ -17,8 +17,8 @@ export class MasterService {
 
   private isMode = environment.production;
   private isTokenGenerationEnabled = environment.tokenGenerationEnabled; // Add this flag in your environment file
-  //private apiUrl = !this.isMode ? environment.uatApiBaseUrl : environment.prodApiBaseUrl;
-  private apiUrl = !this.isMode ? environment.uatOpPortalApiBaseUrl : environment.prodOpPortalApiBaseUrl;
+  private apiUrl = !this.isMode ? environment.uatApiBaseUrl : environment.prodApiBaseUrl;
+  //private apiUrl = !this.isMode ? environment.uatOpPortalApiBaseUrl : environment.prodOpPortalApiBaseUrl;
   private CRMURL = environment.CRMURL;
   private encryptedAidParam: string | null = null;
   private encryptedAcctParam: string | null = null;

@@ -183,6 +183,7 @@ export class DealerInfoComponent implements OnInit, AfterViewInit{
   S1minDate: Date = new Date();  // This sets the minimum date to today
   S2minDate: Date = new Date();
   S3minDate: Date = new Date();
+  today: Date = new Date();
   tablist !: TabsResult[];
   tabSource: any;
   tabdisplayedColumns: string[] = ["account_number", "name", "dis_cat", "dis_cat_desc", "financial_yr_to_date_sales", "financial_last_yr_sales"];
@@ -1877,6 +1878,35 @@ export class DealerInfoComponent implements OnInit, AfterViewInit{
     const day = ('0' + date.getDate()).slice(-2); // Ensure 2 digits for day
     return `${year}-${month}-${day}`;
   }
+
+  // Date filter function: allow only 1st–15th of each month, starting from current month
+  dateFilter = (d: Date | null): boolean => {
+    if (!d) return false;
+
+    const date = new Date(d);
+    const today = new Date();
+
+    // Reset time parts
+    today.setHours(0, 0, 0, 0);
+    date.setHours(0, 0, 0, 0);
+
+    const day = date.getDate();
+
+    // Only days 1–15 allowed
+    if (day > 15) return false;
+
+    // If same month and year, and today is already past 15 → block this month
+    if (
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear() &&
+      today.getDate() > 15
+    ) {
+      return false;
+    }
+
+    // Otherwise allow (future months are fine)
+    return date >= today;
+  };
 
   saveTemplate(): void {
     if (!this.totalVar.total) {

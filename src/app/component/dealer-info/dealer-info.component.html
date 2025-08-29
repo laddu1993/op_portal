@@ -60,7 +60,7 @@
               <th mat-header-cell *matHeaderCellDef style="width: 100px;"> 
                 <mat-form-field appearance="fill" style="width: 130px !important;">
                   <!-- <mat-label>Choose a date</mat-label> -->
-                  <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDateS1" [min]="S1minDate" readonly>
+                  <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDateS1" [matDatepickerFilter]="dateFilter" [min]="S1minDate" readonly>
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
@@ -74,7 +74,7 @@
           <ng-container matColumnDef="s2" *ngIf="!showAccountInfo">
               <th mat-header-cell *matHeaderCellDef style="width: 100px;">
                 <mat-form-field appearance="fill" style="width: 130px !important;">
-                  <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDateS2" [min]="S2minDate" readonly>
+                  <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDateS2" [matDatepickerFilter]="dateFilter" [min]="S2minDate" readonly>
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
@@ -89,7 +89,7 @@
               <th mat-header-cell *matHeaderCellDef style="width: 100px;">
                 <mat-form-field appearance="fill" style="width: 130px !important;">
                   <!-- <mat-label>Choose a date</mat-label> -->
-                  <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDateS3" [min]="S3minDate" readonly>
+                  <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDateS3" [matDatepickerFilter]="dateFilter" [min]="S3minDate" readonly>
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
