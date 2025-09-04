@@ -486,7 +486,10 @@ export class DealerInfoComponent implements OnInit, AfterViewInit{
     if (isChecked) {
       // Convert subtab_arr to string if needed
       this.tabs_arr.push(...subtab_arr);
-      const tabidstr = subtab_arr.join(',');
+      const tabidstr = subtab_arr
+        .map(item => (item != null ? String(item).trim() : ''))
+        .join(',');
+      //console.log('Sub Tab IDs:', tabidstr);
       this.isLoading = true;
       this.loaderService.show();
       // Assuming `this.service` is your service that makes the API call
@@ -1221,11 +1224,12 @@ export class DealerInfoComponent implements OnInit, AfterViewInit{
   // Add this method to calculate HH Gas Promo discount
   private calculateHHDiscount(quantity: number): number {
     if (this.compCode === 'USF') {
-      if (quantity >= 120) return 0.05; // 5%
-      if (quantity >= 90) return 0.04;  // 4%
-      if (quantity >= 60) return 0.03;  // 3%
-      if (quantity >= 30) return 0.02;  // 2%
-      return 0; // No discount
+      // if (quantity >= 120) return 0.05; // 5%
+      // if (quantity >= 90) return 0.04;  // 4%
+      // if (quantity >= 60) return 0.03;  // 3%
+      // if (quantity >= 30) return 0.02;  // 2%
+      // return 0; // No discount
+      return 0;
     }else{
       return 0; // No discount
     }
@@ -1234,10 +1238,11 @@ export class DealerInfoComponent implements OnInit, AfterViewInit{
   // Function to calculate discount for 'CZ' category
   private calculateCZDiscount(quantity: number): number {
     if (this.compCode === 'USF') {
-      return quantity >= 48 ? 0.03 : 
-      quantity >= 24 ? 0.02 : 
-      quantity >= 12 ? 0.01 : 
-      0;
+      // return quantity >= 48 ? 0.03 : 
+      // quantity >= 24 ? 0.02 : 
+      // quantity >= 12 ? 0.01 : 
+      // 0;
+      return 0;
     }else{
       return quantity >= 24 ? 0.03 : 
       quantity >= 12 ? 0.02 : 
@@ -1248,10 +1253,11 @@ export class DealerInfoComponent implements OnInit, AfterViewInit{
 
   private calculateTRCDiscount(quantity: number): number {
     if (this.compCode === 'USF') {
-      return quantity >= 48 ? 0.06 : 
-      quantity >= 24 ? 0.04 : 
-      quantity >= 12 ? 0.02 : 
-      0;
+      // return quantity >= 48 ? 0.06 : 
+      // quantity >= 24 ? 0.04 : 
+      // quantity >= 12 ? 0.02 : 
+      // 0;
+      return 0;
     }else{
       return 0;
     }
@@ -1259,11 +1265,12 @@ export class DealerInfoComponent implements OnInit, AfterViewInit{
 
   private calculateZTHDiscount(quantity: number): number {
     if (this.compCode === 'USF') {
-      return quantity >= 24 ? 0.05 :
-      quantity >= 16 ? 0.04 :
-      quantity >= 10 ? 0.03 :
-      quantity >= 4  ? 0.02 :
-      0;
+      // return quantity >= 24 ? 0.05 :
+      // quantity >= 16 ? 0.04 :
+      // quantity >= 10 ? 0.03 :
+      // quantity >= 4  ? 0.02 :
+      // 0;
+      return 0;
     } else {
       return quantity >= 24 ? 0.03 : 
       quantity >= 12 ? 0.02 : 
@@ -1274,10 +1281,11 @@ export class DealerInfoComponent implements OnInit, AfterViewInit{
 
   private calculateOtherDiscount(quantity: number): number {
     if (this.compCode === 'CDA') {
-      return quantity >= 12 ? 0.06 :
-      quantity >= 8 ? 0.04 :
-      quantity >= 4 ? 0.02 :
-      0;
+      // return quantity >= 12 ? 0.06 :
+      // quantity >= 8 ? 0.04 :
+      // quantity >= 4 ? 0.02 :
+      // 0;
+      return 0;
     } else {
       return 0;
     }
@@ -1644,7 +1652,7 @@ export class DealerInfoComponent implements OnInit, AfterViewInit{
   }
 
   onPanelChange(expanded: boolean, item: any): void {
-    console.log('VL expanded' , expanded);
+    //console.log('VL expanded' , expanded);
     if (expanded) {
       // Perform actions when the panel is expanded
       this.MainTabfunc(item.id, item.subtabs);
@@ -1671,7 +1679,6 @@ export class DealerInfoComponent implements OnInit, AfterViewInit{
 
   MainTabfunc(data: any, subtab_arr: string[]): void {
     console.log('Handle Element Data:', data);
-  
     // Remove duplicates from subtab_arr using Set
     subtab_arr = Array.from(new Set(subtab_arr));
   
